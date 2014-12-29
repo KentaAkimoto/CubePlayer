@@ -17,6 +17,12 @@
 		371AA1E91A519C0F002FCA6A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1E81A519C0F002FCA6A /* Foundation.framework */; };
 		371AA1EB1A519C20002FCA6A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1EA1A519C20002FCA6A /* QuartzCore.framework */; };
 		371AA1ED1A519C33002FCA6A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1EC1A519C33002FCA6A /* UIKit.framework */; };
+		371AA1FF1A51B400002FCA6A /* AGLKContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 371AA1FB1A51B400002FCA6A /* AGLKContext.h */; };
+		371AA2001A51B400002FCA6A /* AGLKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 371AA1FC1A51B400002FCA6A /* AGLKContext.m */; };
+		371AA2011A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 371AA1FD1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.h */; };
+		371AA2021A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 371AA1FE1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m */; };
+		371AA2051A51B501002FCA6A /* beetle.png in Resources */ = {isa = PBXBuildFile; fileRef = 371AA2031A51B501002FCA6A /* beetle.png */; };
+		371AA2061A51B501002FCA6A /* leaves.gif in Resources */ = {isa = PBXBuildFile; fileRef = 371AA2041A51B501002FCA6A /* leaves.gif */; };
 		37410A471A50640C00009EAD /* CubePlayerCoreSampleSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37410A461A50640C00009EAD /* CubePlayerCoreSampleSwift.swift */; };
 		37FF6C631A504C100036A4A9 /* CubePlayerCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 37FF6C621A504C100036A4A9 /* CubePlayerCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37FF6C691A504C100036A4A9 /* CubePlayerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FF6C5D1A504C100036A4A9 /* CubePlayerCore.framework */; };
@@ -46,6 +52,12 @@
 		371AA1E81A519C0F002FCA6A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		371AA1EA1A519C20002FCA6A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		371AA1EC1A519C33002FCA6A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		371AA1FB1A51B400002FCA6A /* AGLKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGLKContext.h; sourceTree = "<group>"; };
+		371AA1FC1A51B400002FCA6A /* AGLKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGLKContext.m; sourceTree = "<group>"; };
+		371AA1FD1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGLKVertexAttribArrayBuffer.h; sourceTree = "<group>"; };
+		371AA1FE1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGLKVertexAttribArrayBuffer.m; sourceTree = "<group>"; };
+		371AA2031A51B501002FCA6A /* beetle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beetle.png; sourceTree = "<group>"; };
+		371AA2041A51B501002FCA6A /* leaves.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = leaves.gif; sourceTree = "<group>"; };
 		37410A461A50640C00009EAD /* CubePlayerCoreSampleSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubePlayerCoreSampleSwift.swift; sourceTree = "<group>"; };
 		37FF6C5D1A504C100036A4A9 /* CubePlayerCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CubePlayerCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FF6C611A504C100036A4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,12 +127,18 @@
 		37FF6C5F1A504C100036A4A9 /* CubePlayerCore */ = {
 			isa = PBXGroup;
 			children = (
+				371AA2031A51B501002FCA6A /* beetle.png */,
+				371AA2041A51B501002FCA6A /* leaves.gif */,
 				37FF6C621A504C100036A4A9 /* CubePlayerCore.h */,
 				371AA1CC1A511192002FCA6A /* CPCCubeView.xib */,
 				371AA1C41A510EEB002FCA6A /* CPCCubeViewController.h */,
 				371AA1C51A510EEB002FCA6A /* CPCCubeViewController.m */,
 				371AA1C81A510F02002FCA6A /* Shader.fsh */,
 				371AA1C91A510F02002FCA6A /* Shader.vsh */,
+				371AA1FB1A51B400002FCA6A /* AGLKContext.h */,
+				371AA1FC1A51B400002FCA6A /* AGLKContext.m */,
+				371AA1FD1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.h */,
+				371AA1FE1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m */,
 				37FF6C801A5060470036A4A9 /* CubePlayerCoreSample.h */,
 				37FF6C811A5060470036A4A9 /* CubePlayerCoreSample.m */,
 				37410A461A50640C00009EAD /* CubePlayerCoreSampleSwift.swift */,
@@ -163,7 +181,9 @@
 			files = (
 				37FF6C631A504C100036A4A9 /* CubePlayerCore.h in Headers */,
 				371AA1C61A510EEB002FCA6A /* CPCCubeViewController.h in Headers */,
+				371AA2011A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.h in Headers */,
 				37FF6C821A5060470036A4A9 /* CubePlayerCoreSample.h in Headers */,
+				371AA1FF1A51B400002FCA6A /* AGLKContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +267,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				371AA1CB1A510F02002FCA6A /* Shader.vsh in Resources */,
+				371AA2061A51B501002FCA6A /* leaves.gif in Resources */,
 				371AA1CA1A510F02002FCA6A /* Shader.fsh in Resources */,
+				371AA2051A51B501002FCA6A /* beetle.png in Resources */,
 				371AA1CD1A511192002FCA6A /* CPCCubeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +288,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				371AA2001A51B400002FCA6A /* AGLKContext.m in Sources */,
 				37410A471A50640C00009EAD /* CubePlayerCoreSampleSwift.swift in Sources */,
+				371AA2021A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m in Sources */,
 				371AA1C71A510EEB002FCA6A /* CPCCubeViewController.m in Sources */,
 				37FF6C831A5060470036A4A9 /* CubePlayerCoreSample.m in Sources */,
 			);

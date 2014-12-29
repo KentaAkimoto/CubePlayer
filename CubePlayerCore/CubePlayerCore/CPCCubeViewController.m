@@ -8,195 +8,217 @@
 
 #import "CPCCubeViewController.h"
 #import <OpenGLES/ES2/glext.h>
+#import "AGLKVertexAttribArrayBuffer.h"
+#import "AGLKContext.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+@interface GLKEffectPropertyTexture (AGLKAdditions)
 
-// Uniform index.
-enum
+- (void)aglkSetParameter:(GLenum)parameterID
+                   value:(GLint)value;
+
+@end
+
+
+@implementation GLKEffectPropertyTexture (AGLKAdditions)
+
+- (void)aglkSetParameter:(GLenum)parameterID
+                   value:(GLint)value;
 {
-    UNIFORM_MODELVIEWPROJECTION_MATRIX,
-    UNIFORM_NORMAL_MATRIX,
-    NUM_UNIFORMS
-};
-GLint uniforms[NUM_UNIFORMS];
-
-// Attribute index.
-enum
-{
-    ATTRIB_VERTEX,
-    ATTRIB_NORMAL,
-    NUM_ATTRIBUTES
-};
-
-GLfloat gCubeVertexData[216] = 
-{
-    // Data layout for each line below is:
-    // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-    0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
+    glBindTexture(self.target, self.name);
     
-    0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,
-    
-    -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,
-    
-    -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,
-    
-    0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,
-    
-    0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f
-};
-
-@interface CPCCubeViewController () {
-    GLuint _program;
-    
-    GLKMatrix4 _modelViewProjectionMatrix;
-    GLKMatrix3 _normalMatrix;
-    float _rotation;
-    
-    GLuint _vertexArray;
-    GLuint _vertexBuffer;
+    glTexParameteri(
+                    self.target,
+                    parameterID, 
+                    value);
 }
-@property (strong, nonatomic) EAGLContext *context;
-@property (strong, nonatomic) GLKBaseEffect *effect;
 
-- (void)setupGL;
-- (void)tearDownGL;
+@end
+
+@interface CPCCubeViewController ()
 
 - (BOOL)loadShaders;
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
 - (BOOL)linkProgram:(GLuint)prog;
 - (BOOL)validateProgram:(GLuint)prog;
+
 @end
 
 @implementation CPCCubeViewController
+@synthesize baseEffect;
+@synthesize vertexBuffer;
 
+/////////////////////////////////////////////////////////////////
+// GLSL program uniform indices.
+enum
+{
+    UNIFORM_MODELVIEWPROJECTION_MATRIX,
+    UNIFORM_NORMAL_MATRIX,
+    UNIFORM_TEXTURE0_SAMPLER2D,
+    UNIFORM_TEXTURE1_SAMPLER2D,
+    NUM_UNIFORMS
+};
+
+
+/////////////////////////////////////////////////////////////////
+// GLSL program uniform IDs.
+GLint uniforms[NUM_UNIFORMS];
+
+
+/////////////////////////////////////////////////////////////////
+// This data type is used to store information for each vertex
+typedef struct {
+    GLKVector3  positionCoords;
+    GLKVector3  normalCoords;
+    GLKVector2  textureCoords;
+}
+SceneVertex;
+
+/////////////////////////////////////////////////////////////////
+// Define vertex data for a triangle to use in example
+static const SceneVertex vertices[] =
+{
+    {{ 0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+    
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {1.0f, 0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.0f, 0.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {1.0f, 1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {1.0f, 1.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.0f, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.0f, 1.0f}},
+    
+    {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+    
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.0f, 0.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {1.0f, 1.0f}},
+    
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {1.0f, 1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {1.0f, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {1.0f, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 0.0f}},
+    
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {4.0f, 0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {4.0f, 4.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {4.0f, 4.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 4.0f}},
+};
+
+
+/////////////////////////////////////////////////////////////////
+// Called when the view controller's view is loaded
+// Perform initialization before the view is asked to draw
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-
-    if (!self.context) {
-        NSLog(@"Failed to create ES context");
-    }
-    
+    // Verify the type of view created automatically by the
+    // Interface Builder storyboard
     GLKView *view = (GLKView *)self.view;
-    view.context = self.context;
+    NSAssert([view isKindOfClass:[GLKView class]],
+             @"View controller's view is not a GLKView");
+    
+    // Create an OpenGL ES 2.0 context and provide it to the
+    // view
+    view.context = [[AGLKContext alloc]
+                    initWithAPI:kEAGLRenderingAPIOpenGLES2];
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
-    [self setupGL];
-}
-
-- (void)dealloc
-{    
-    [self tearDownGL];
-    
-    if ([EAGLContext currentContext] == self.context) {
-        [EAGLContext setCurrentContext:nil];
-    }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-
-    if ([self isViewLoaded] && ([[self view] window] == nil)) {
-        self.view = nil;
-        
-        [self tearDownGL];
-        
-        if ([EAGLContext currentContext] == self.context) {
-            [EAGLContext setCurrentContext:nil];
-        }
-        self.context = nil;
-    }
-
-    // Dispose of any resources that can be recreated.
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return YES;
-}
-
-- (void)setupGL
-{
-    [EAGLContext setCurrentContext:self.context];
+    // Make the new context current
+    [AGLKContext setCurrentContext:view.context];
     
     [self loadShaders];
     
-    self.effect = [[GLKBaseEffect alloc] init];
-    self.effect.light0.enabled = GL_TRUE;
-    self.effect.light0.diffuseColor = GLKVector4Make(1.0f, 0.4f, 0.4f, 1.0f);
+    // Create a base effect that provides standard OpenGL ES 2.0
+    // shading language programs and set constants to be used for
+    // all subsequent rendering
+    self.baseEffect = [[GLKBaseEffect alloc] init];
+    self.baseEffect.light0.enabled = GL_TRUE;
+    self.baseEffect.light0.diffuseColor = GLKVector4Make(
+                                                         0.7f, // Red
+                                                         0.7f, // Green
+                                                         0.7f, // Blue
+                                                         1.0f);// Alpha
     
     glEnable(GL_DEPTH_TEST);
     
-    glGenVertexArraysOES(1, &_vertexArray);
-    glBindVertexArrayOES(_vertexArray);
+    // Set the background color stored in the current context
+    ((AGLKContext *)view.context).clearColor = GLKVector4Make(
+                                                              0.65f, // Red
+                                                              0.65f, // Green
+                                                              0.65f, // Blue
+                                                              1.0f);// Alpha
     
-    glGenBuffers(1, &_vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
+    // Create vertex buffer containing vertices to draw
+    self.vertexBuffer = [[AGLKVertexAttribArrayBuffer alloc]
+                         initWithAttribStride:sizeof(SceneVertex)
+                         numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)
+                         bytes:vertices
+                         usage:GL_STATIC_DRAW];
     
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
+    // Setup texture0
+    CGImageRef imageRef0 =
+    [[UIImage imageNamed:@"leaves.gif" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] CGImage];
     
-    glBindVertexArrayOES(0);
+    GLKTextureInfo *textureInfo0 = [GLKTextureLoader
+                                    textureWithCGImage:imageRef0
+                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithBool:YES],
+                                             GLKTextureLoaderOriginBottomLeft, nil]
+                                    error:NULL];
+    
+    self.baseEffect.texture2d0.name = textureInfo0.name;
+    self.baseEffect.texture2d0.target = textureInfo0.target;
+    [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_S
+                                           value:GL_REPEAT];
+    [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_T
+                                           value:GL_REPEAT];
+    
+    // Setup texture1
+    CGImageRef imageRef1 =
+    [[UIImage imageNamed:@"beetle.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] CGImage];
+    
+    GLKTextureInfo *textureInfo1 = [GLKTextureLoader
+                                    textureWithCGImage:imageRef1
+                                    options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                             [NSNumber numberWithBool:YES],
+                                             GLKTextureLoaderOriginBottomLeft, nil]
+                                    error:NULL];
+    
+    self.baseEffect.texture2d1.name = textureInfo1.name;
+    self.baseEffect.texture2d1.target = textureInfo1.target;
+    self.baseEffect.texture2d1.envMode = GLKTextureEnvModeDecal;
+    [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_S
+                                           value:GL_REPEAT];
+    [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_T
+                                           value:GL_REPEAT];
 }
 
-- (void)tearDownGL
-{
-    [EAGLContext setCurrentContext:self.context];
-    
-    glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
-    
-    self.effect = nil;
-    
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
-    }
-}
 
-#pragma mark - GLKView and GLKViewController delegate methods
-
+/////////////////////////////////////////////////////////////////
+//
 - (void)update
 {
     float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
     
-    self.effect.transform.projectionMatrix = projectionMatrix;
+    self.baseEffect.transform.projectionMatrix = projectionMatrix;
     
     GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -4.0f);
     baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
@@ -206,40 +228,108 @@ GLfloat gCubeVertexData[216] =
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
     modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
     
-    self.effect.transform.modelviewMatrix = modelViewMatrix;
+    self.baseEffect.transform.modelviewMatrix = modelViewMatrix;
     
     // Compute the model view matrix for the object rendered with ES2
     modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 1.5f);
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
     modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
     
-    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), NULL);
+    _normalMatrix = GLKMatrix4GetMatrix3(GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL));
     
     _modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
     
     _rotation += self.timeSinceLastUpdate * 0.5f;
 }
 
+/////////////////////////////////////////////////////////////////
+// GLKView delegate method: Called by the view controller's view
+// whenever Cocoa Touch asks the view controller's view to
+// draw itself. (In this case, render into a frame buffer that
+// shares memory with a Core Animation Layer)
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Clear back frame buffer (erase previous drawing)
+    [(AGLKContext *)view.context clear:
+     GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT];
     
-    glBindVertexArrayOES(_vertexArray);
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribPosition
+                           numberOfCoordinates:3
+                                  attribOffset:offsetof(SceneVertex, positionCoords)
+                                  shouldEnable:YES];
     
-    // Render the object with GLKit
-    [self.effect prepareToDraw];
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribNormal
+                           numberOfCoordinates:3
+                                  attribOffset:offsetof(SceneVertex, normalCoords)
+                                  shouldEnable:YES];
     
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord0
+                           numberOfCoordinates:2
+                                  attribOffset:offsetof(SceneVertex, textureCoords)
+                                  shouldEnable:YES];
+    
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord1
+                           numberOfCoordinates:2
+                                  attribOffset:offsetof(SceneVertex, textureCoords)
+                                  shouldEnable:YES];
+    
+    [self.baseEffect prepareToDraw];
+    
+    // Draw triangles using baseEffect
+    [self.vertexBuffer drawArrayWithMode:GL_TRIANGLES
+                        startVertexIndex:0
+                        numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)];
     
     // Render the object again with ES2
     glUseProgram(_program);
     
     glUniformMatrix4fv(uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, _modelViewProjectionMatrix.m);
     glUniformMatrix3fv(uniforms[UNIFORM_NORMAL_MATRIX], 1, 0, _normalMatrix.m);
+    glUniform1i(uniforms[UNIFORM_TEXTURE0_SAMPLER2D], 0);
+    glUniform1i(uniforms[UNIFORM_TEXTURE1_SAMPLER2D], 1);
     
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
+
+
+/////////////////////////////////////////////////////////////////
+// Called when the view controller's view has been unloaded
+// Perform clean-up that is possible when you know the view
+// controller's view won't be asked to draw again soon.
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    // Make the view's context current
+    GLKView *view = (GLKView *)self.view;
+    [AGLKContext setCurrentContext:view.context];
+    
+    // Delete buffers that aren't needed when view is unloaded
+    self.vertexBuffer = nil;
+    
+    self.baseEffect = nil;
+    
+    if (_program) {
+        glDeleteProgram(_program);
+        _program = 0;
+    }
+    
+    // Stop using the context created in -viewDidLoad
+    ((GLKView *)self.view).context = nil;
+    [EAGLContext setCurrentContext:nil];
+}
+
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    } else {
+        return YES;
+    }
+}
+
 
 #pragma mark -  OpenGL ES 2 shader compilation
 
@@ -273,8 +363,10 @@ GLfloat gCubeVertexData[216] =
     
     // Bind attribute locations.
     // This needs to be done prior to linking.
-    glBindAttribLocation(_program, GLKVertexAttribPosition, "position");
-    glBindAttribLocation(_program, GLKVertexAttribNormal, "normal");
+    glBindAttribLocation(_program, GLKVertexAttribPosition, "aPosition");
+    glBindAttribLocation(_program, GLKVertexAttribNormal, "aNormal");
+    glBindAttribLocation(_program, GLKVertexAttribTexCoord0, "aTextureCoord0");
+    glBindAttribLocation(_program, GLKVertexAttribTexCoord1, "aTextureCoord1");
     
     // Link program.
     if (![self linkProgram:_program]) {
@@ -297,8 +389,10 @@ GLfloat gCubeVertexData[216] =
     }
     
     // Get uniform locations.
-    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "normalMatrix");
+    uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "uModelViewProjectionMatrix");
+    uniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, "uNormalMatrix");
+    uniforms[UNIFORM_TEXTURE0_SAMPLER2D] = glGetUniformLocation(_program, "uSampler0");
+    uniforms[UNIFORM_TEXTURE1_SAMPLER2D] = glGetUniformLocation(_program, "uSampler1");
     
     // Release vertex and fragment shaders.
     if (vertShader) {
