@@ -1,0 +1,520 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		371AA1D01A512CC8002FCA6A /* sample_iPod.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 371AA1CF1A512CC8002FCA6A /* sample_iPod.m4v */; };
+		371AA1DF1A519B3E002FCA6A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1DE1A519B3E002FCA6A /* OpenGLES.framework */; };
+		371AA1E11A519B43002FCA6A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1E01A519B43002FCA6A /* GLKit.framework */; };
+		371AA1E31A519BD7002FCA6A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1E21A519BD7002FCA6A /* Foundation.framework */; };
+		371AA1E51A519BEE002FCA6A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1E41A519BEE002FCA6A /* QuartzCore.framework */; };
+		371AA1E71A519C04002FCA6A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1E61A519C04002FCA6A /* UIKit.framework */; };
+		371AA1F81A51A5D5002FCA6A /* CubePlayerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */; };
+		371AA1F91A51A5D5002FCA6A /* CubePlayerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		37410A451A50626C00009EAD /* CubePlayerAppSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 37410A441A50626C00009EAD /* CubePlayerAppSample.m */; };
+		37FF6C341A50447B0036A4A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF6C331A50447B0036A4A9 /* AppDelegate.swift */; };
+		37FF6C361A50447B0036A4A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF6C351A50447B0036A4A9 /* ViewController.swift */; };
+		37FF6C391A50447B0036A4A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37FF6C371A50447B0036A4A9 /* Main.storyboard */; };
+		37FF6C3B1A50447B0036A4A9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37FF6C3A1A50447B0036A4A9 /* Images.xcassets */; };
+		37FF6C3E1A50447B0036A4A9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 37FF6C3C1A50447B0036A4A9 /* LaunchScreen.xib */; };
+		37FF6C4A1A50447B0036A4A9 /* CubePlayerAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF6C491A50447B0036A4A9 /* CubePlayerAppTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		37FF6C441A50447B0036A4A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37FF6C261A50447B0036A4A9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 37FF6C2D1A50447B0036A4A9;
+			remoteInfo = CubePlayerApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		371AA1FA1A51A5D5002FCA6A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				371AA1F91A51A5D5002FCA6A /* CubePlayerCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		371AA1CF1A512CC8002FCA6A /* sample_iPod.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_iPod.m4v; sourceTree = "<group>"; };
+		371AA1DE1A519B3E002FCA6A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		371AA1E01A519B43002FCA6A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		371AA1E21A519BD7002FCA6A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		371AA1E41A519BEE002FCA6A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		371AA1E61A519C04002FCA6A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = CubePlayerCore.framework; path = "/Users/kenta/Library/Developer/Xcode/DerivedData/CubePlayer-dvzwfftvadaggybxkpyvevnipjzh/Build/Products/Debug-iphoneos/CubePlayerCore.framework"; sourceTree = "<absolute>"; };
+		37410A421A50626B00009EAD /* CubePlayerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CubePlayerApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		37410A431A50626C00009EAD /* CubePlayerAppSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubePlayerAppSample.h; sourceTree = "<group>"; };
+		37410A441A50626C00009EAD /* CubePlayerAppSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubePlayerAppSample.m; sourceTree = "<group>"; };
+		37FF6C2E1A50447B0036A4A9 /* CubePlayerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubePlayerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		37FF6C321A50447B0036A4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37FF6C331A50447B0036A4A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		37FF6C351A50447B0036A4A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		37FF6C381A50447B0036A4A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		37FF6C3A1A50447B0036A4A9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		37FF6C3D1A50447B0036A4A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		37FF6C431A50447B0036A4A9 /* CubePlayerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CubePlayerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		37FF6C481A50447B0036A4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37FF6C491A50447B0036A4A9 /* CubePlayerAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubePlayerAppTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		37FF6C2B1A50447B0036A4A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				371AA1E71A519C04002FCA6A /* UIKit.framework in Frameworks */,
+				371AA1F81A51A5D5002FCA6A /* CubePlayerCore.framework in Frameworks */,
+				371AA1E51A519BEE002FCA6A /* QuartzCore.framework in Frameworks */,
+				371AA1E31A519BD7002FCA6A /* Foundation.framework in Frameworks */,
+				371AA1E11A519B43002FCA6A /* GLKit.framework in Frameworks */,
+				371AA1DF1A519B3E002FCA6A /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37FF6C401A50447B0036A4A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		371AA1CE1A512CC8002FCA6A /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				371AA1CF1A512CC8002FCA6A /* sample_iPod.m4v */,
+			);
+			name = resources;
+			path = CubePlayerApp/resources;
+			sourceTree = "<group>";
+		};
+		37FF6C251A50447B0036A4A9 = {
+			isa = PBXGroup;
+			children = (
+				371AA1CE1A512CC8002FCA6A /* resources */,
+				37FF6C301A50447B0036A4A9 /* CubePlayerApp */,
+				37FF6C461A50447B0036A4A9 /* CubePlayerAppTests */,
+				37FF6C7C1A505F8D0036A4A9 /* Frameworks */,
+				37FF6C2F1A50447B0036A4A9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		37FF6C2F1A50447B0036A4A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				37FF6C2E1A50447B0036A4A9 /* CubePlayerApp.app */,
+				37FF6C431A50447B0036A4A9 /* CubePlayerAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		37FF6C301A50447B0036A4A9 /* CubePlayerApp */ = {
+			isa = PBXGroup;
+			children = (
+				37FF6C331A50447B0036A4A9 /* AppDelegate.swift */,
+				37FF6C351A50447B0036A4A9 /* ViewController.swift */,
+				37FF6C371A50447B0036A4A9 /* Main.storyboard */,
+				37FF6C3A1A50447B0036A4A9 /* Images.xcassets */,
+				37FF6C3C1A50447B0036A4A9 /* LaunchScreen.xib */,
+				37FF6C311A50447B0036A4A9 /* Supporting Files */,
+				37410A431A50626C00009EAD /* CubePlayerAppSample.h */,
+				37410A441A50626C00009EAD /* CubePlayerAppSample.m */,
+				37410A421A50626B00009EAD /* CubePlayerApp-Bridging-Header.h */,
+			);
+			path = CubePlayerApp;
+			sourceTree = "<group>";
+		};
+		37FF6C311A50447B0036A4A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				37FF6C321A50447B0036A4A9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		37FF6C461A50447B0036A4A9 /* CubePlayerAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				37FF6C491A50447B0036A4A9 /* CubePlayerAppTests.swift */,
+				37FF6C471A50447B0036A4A9 /* Supporting Files */,
+			);
+			path = CubePlayerAppTests;
+			sourceTree = "<group>";
+		};
+		37FF6C471A50447B0036A4A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				37FF6C481A50447B0036A4A9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		37FF6C7C1A505F8D0036A4A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */,
+				371AA1E61A519C04002FCA6A /* UIKit.framework */,
+				371AA1E41A519BEE002FCA6A /* QuartzCore.framework */,
+				371AA1E21A519BD7002FCA6A /* Foundation.framework */,
+				371AA1E01A519B43002FCA6A /* GLKit.framework */,
+				371AA1DE1A519B3E002FCA6A /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		37FF6C2D1A50447B0036A4A9 /* CubePlayerApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37FF6C4D1A50447B0036A4A9 /* Build configuration list for PBXNativeTarget "CubePlayerApp" */;
+			buildPhases = (
+				37FF6C2A1A50447B0036A4A9 /* Sources */,
+				37FF6C2B1A50447B0036A4A9 /* Frameworks */,
+				37FF6C2C1A50447B0036A4A9 /* Resources */,
+				371AA1FA1A51A5D5002FCA6A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CubePlayerApp;
+			productName = CubePlayerApp;
+			productReference = 37FF6C2E1A50447B0036A4A9 /* CubePlayerApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		37FF6C421A50447B0036A4A9 /* CubePlayerAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37FF6C501A50447B0036A4A9 /* Build configuration list for PBXNativeTarget "CubePlayerAppTests" */;
+			buildPhases = (
+				37FF6C3F1A50447B0036A4A9 /* Sources */,
+				37FF6C401A50447B0036A4A9 /* Frameworks */,
+				37FF6C411A50447B0036A4A9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				37FF6C451A50447B0036A4A9 /* PBXTargetDependency */,
+			);
+			name = CubePlayerAppTests;
+			productName = CubePlayerAppTests;
+			productReference = 37FF6C431A50447B0036A4A9 /* CubePlayerAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		37FF6C261A50447B0036A4A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Kenta Akimoto";
+				TargetAttributes = {
+					37FF6C2D1A50447B0036A4A9 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					37FF6C421A50447B0036A4A9 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 37FF6C2D1A50447B0036A4A9;
+					};
+				};
+			};
+			buildConfigurationList = 37FF6C291A50447B0036A4A9 /* Build configuration list for PBXProject "CubePlayerApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 37FF6C251A50447B0036A4A9;
+			productRefGroup = 37FF6C2F1A50447B0036A4A9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				37FF6C2D1A50447B0036A4A9 /* CubePlayerApp */,
+				37FF6C421A50447B0036A4A9 /* CubePlayerAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		37FF6C2C1A50447B0036A4A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37FF6C391A50447B0036A4A9 /* Main.storyboard in Resources */,
+				371AA1D01A512CC8002FCA6A /* sample_iPod.m4v in Resources */,
+				37FF6C3E1A50447B0036A4A9 /* LaunchScreen.xib in Resources */,
+				37FF6C3B1A50447B0036A4A9 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37FF6C411A50447B0036A4A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		37FF6C2A1A50447B0036A4A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37FF6C361A50447B0036A4A9 /* ViewController.swift in Sources */,
+				37410A451A50626C00009EAD /* CubePlayerAppSample.m in Sources */,
+				37FF6C341A50447B0036A4A9 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37FF6C3F1A50447B0036A4A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37FF6C4A1A50447B0036A4A9 /* CubePlayerAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		37FF6C451A50447B0036A4A9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 37FF6C2D1A50447B0036A4A9 /* CubePlayerApp */;
+			targetProxy = 37FF6C441A50447B0036A4A9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		37FF6C371A50447B0036A4A9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37FF6C381A50447B0036A4A9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		37FF6C3C1A50447B0036A4A9 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37FF6C3D1A50447B0036A4A9 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		37FF6C4B1A50447B0036A4A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "5dab7e6c-199d-45e0-a575-f373f6d980b1";
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		37FF6C4C1A50447B0036A4A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: KENTA AKIMOTO";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: KENTA AKIMOTO";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "5dab7e6c-199d-45e0-a575-f373f6d980b1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		37FF6C4E1A50447B0036A4A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/kenta/xcodeProjects/CubePlayer/CubePlayerCore/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/CubePlayer-dvzwfftvadaggybxkpyvevnipjzh/Build/Products/Release-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/CubePlayer-dvzwfftvadaggybxkpyvevnipjzh/Build/Products/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = CubePlayerApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5dab7e6c-199d-45e0-a575-f373f6d980b1";
+				SWIFT_OBJC_BRIDGING_HEADER = "CubePlayerApp/CubePlayerApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		37FF6C4F1A50447B0036A4A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: KENTA AKIMOTO";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: KENTA AKIMOTO";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/kenta/xcodeProjects/CubePlayer/CubePlayerCore/build/Debug-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/CubePlayer-dvzwfftvadaggybxkpyvevnipjzh/Build/Products/Release-iphoneos",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/CubePlayer-dvzwfftvadaggybxkpyvevnipjzh/Build/Products/Debug-iphoneos",
+				);
+				INFOPLIST_FILE = CubePlayerApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "5dab7e6c-199d-45e0-a575-f373f6d980b1";
+				SWIFT_OBJC_BRIDGING_HEADER = "CubePlayerApp/CubePlayerApp-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		37FF6C511A50447B0036A4A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CubePlayerAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CubePlayerApp.app/CubePlayerApp";
+			};
+			name = Debug;
+		};
+		37FF6C521A50447B0036A4A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = CubePlayerAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CubePlayerApp.app/CubePlayerApp";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		37FF6C291A50447B0036A4A9 /* Build configuration list for PBXProject "CubePlayerApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37FF6C4B1A50447B0036A4A9 /* Debug */,
+				37FF6C4C1A50447B0036A4A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		37FF6C4D1A50447B0036A4A9 /* Build configuration list for PBXNativeTarget "CubePlayerApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37FF6C4E1A50447B0036A4A9 /* Debug */,
+				37FF6C4F1A50447B0036A4A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		37FF6C501A50447B0036A4A9 /* Build configuration list for PBXNativeTarget "CubePlayerAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37FF6C511A50447B0036A4A9 /* Debug */,
+				37FF6C521A50447B0036A4A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 37FF6C261A50447B0036A4A9 /* Project object */;
+}
