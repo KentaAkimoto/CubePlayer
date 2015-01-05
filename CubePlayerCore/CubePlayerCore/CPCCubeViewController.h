@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 
+@class AVURLAsset;
 @class AGLKVertexAttribArrayBuffer;
 
 @interface CPCCubeViewController : GLKViewController
@@ -29,5 +30,10 @@
 *baseEffect;
 @property (strong, nonatomic) AGLKVertexAttribArrayBuffer
 *vertexBuffer;
+
+/**
+ * assetUrlを指定して、インスタンスを生成する
+ */
++(instancetype)cubeViewControllerWithUrl:(NSURL*)assetUrl;
 
 @end

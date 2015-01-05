@@ -10,6 +10,7 @@
 #import <OpenGLES/ES2/glext.h>
 #import "AGLKVertexAttribArrayBuffer.h"
 #import "AGLKContext.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface GLKEffectPropertyTexture (AGLKAdditions)
 
@@ -36,6 +37,14 @@
 
 @interface CPCCubeViewController ()
 
+@property (strong, nonatomic) AVURLAsset *asset;
+@property (strong, nonatomic) AVPlayerItem *playerItem;
+@property (strong, nonatomic) AVPlayer *player;
+@property (strong, nonatomic) AVMutableComposition *comp;
+@property (strong, nonatomic) AVMutableCompositionTrack *track;
+@property (strong, nonatomic) AVAssetImageGenerator *imageGen;
+@property (assign, nonatomic) CGContextRef cgContext;
+
 - (BOOL)loadShaders;
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
 - (BOOL)linkProgram:(GLuint)prog;
@@ -46,6 +55,8 @@
 @implementation CPCCubeViewController
 @synthesize baseEffect;
 @synthesize vertexBuffer;
+
+static const NSString* itemStatusContext;
 
 /////////////////////////////////////////////////////////////////
 // GLSL program uniform indices.
@@ -112,12 +123,12 @@ static const SceneVertex vertices[] =
     {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 1.0f}},
     {{-0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 0.0f}},
     
-    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {4.0f, 0.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {1.0f, 0.0f}},
     {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {4.0f, 4.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {4.0f, 4.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
     {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
-    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 4.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 1.0f}},
 };
 
 
@@ -171,7 +182,7 @@ static const SceneVertex vertices[] =
                          numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)
                          bytes:vertices
                          usage:GL_STATIC_DRAW];
-    
+
     // Setup texture0
     CGImageRef imageRef0 =
     [[UIImage imageNamed:@"leaves.gif" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] CGImage];
@@ -208,6 +219,9 @@ static const SceneVertex vertices[] =
                                            value:GL_REPEAT];
     [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_T
                                            value:GL_REPEAT];
+    
+    
+    [self setupPlayer];
 }
 
 
@@ -215,6 +229,8 @@ static const SceneVertex vertices[] =
 //
 - (void)update
 {
+    [self captureSnapImage];
+    
     float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
     
@@ -229,7 +245,7 @@ static const SceneVertex vertices[] =
     modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
     
     self.baseEffect.transform.modelviewMatrix = modelViewMatrix;
-    
+/*
     // Compute the model view matrix for the object rendered with ES2
     modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 1.5f);
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
@@ -238,8 +254,9 @@ static const SceneVertex vertices[] =
     _normalMatrix = GLKMatrix4GetMatrix3(GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL));
     
     _modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
-    
+*/
     _rotation += self.timeSinceLastUpdate * 0.5f;
+
 }
 
 /////////////////////////////////////////////////////////////////
@@ -249,6 +266,7 @@ static const SceneVertex vertices[] =
 // shares memory with a Core Animation Layer)
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+    
     // Clear back frame buffer (erase previous drawing)
     [(AGLKContext *)view.context clear:
      GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT];
@@ -485,6 +503,121 @@ static const SceneVertex vertices[] =
     }
     
     return YES;
+}
+
+#pragma mark - initializer
+
++(instancetype)cubeViewControllerWithUrl:(NSURL*)assetUrl
+{
+    CPCCubeViewController *cubeViewController = [[CPCCubeViewController alloc] initWithNibName:@"CPCCubeView" bundle:[NSBundle bundleForClass:[self class]]];
+    NSDictionary* assetOptions = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
+                                                             forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:assetUrl options:assetOptions];
+    cubeViewController.asset = asset;
+    return cubeViewController;
+}
+
+-(void)setupPlayer
+{
+    [_asset loadValuesAsynchronouslyForKeys:[NSArray arrayWithObject:@"tracks"] completionHandler:^{
+        NSError* error = nil;
+        AVKeyValueStatus status = [_asset statusOfValueForKey:@"tracks" error:&error];
+        if (status == AVKeyValueStatusLoaded) {
+            self.playerItem = [[AVPlayerItem alloc] initWithAsset:_asset];
+            [_playerItem addObserver:self forKeyPath:@"status" options:0 context:&itemStatusContext];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:)
+                                                         name:AVPlayerItemDidPlayToEndTimeNotification
+                                                       object:_playerItem];
+            self.player = [[AVPlayer alloc] initWithPlayerItem:_playerItem];
+        } else {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+    }];
+    
+    AVAssetTrack* srcTrack = [[_asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    self.comp = [AVMutableComposition composition];
+    self.track = [_comp addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+    NSError* error = nil;
+    BOOL ok = [_track insertTimeRange:srcTrack.timeRange ofTrack:srcTrack atTime:kCMTimeZero error:&error];
+    if (!ok) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    self.imageGen = [[AVAssetImageGenerator alloc] initWithAsset:_comp];
+}
+
+- (void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object
+                        change:(NSDictionary*)change context:(void*)ctx
+{
+    if (ctx == &itemStatusContext) {
+        if (_playerItem.status == AVPlayerItemStatusReadyToPlay && _player.rate == 0) {
+            for (AVPlayerItemTrack* itemTrack in _playerItem.tracks) {
+                if (![itemTrack.assetTrack hasMediaCharacteristic:AVMediaCharacteristicAudible]) {
+                    itemTrack.enabled = NO;
+                }
+            }
+            [_player play];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:ctx];
+    }
+}
+
+- (void)playerItemDidReachEnd:(NSNotification*)notification
+{
+    [_player seekToTime:kCMTimeZero];
+    [_player play];
+    //[player pause];
+}
+
+- (void)captureSnapImage
+{
+    CMTime time = [_player currentTime];
+    CMTime actualTime;
+    NSError* error = nil;
+    CGImageRef cgImage = [_imageGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    if (cgImage != nil) {
+/*
+        GLKTextureInfo *textureInfo0 = [GLKTextureLoader
+                                        textureWithCGImage:cgImage
+                                        options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                 [NSNumber numberWithBool:YES],
+                                                 GLKTextureLoaderOriginBottomLeft, nil]
+                                        error:NULL];
+        
+        self.baseEffect.texture2d0.name = textureInfo0.name;
+        self.baseEffect.texture2d0.target = textureInfo0.target;
+//        self.baseEffect.texture2d0.envMode = GLKTextureEnvModeDecal;
+        [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_S
+                                               value:GL_CLAMP_TO_EDGE];
+        [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_T
+                                               value:GL_CLAMP_TO_EDGE];
+
+*/
+        // テクスチャバッファを新規に作り続けてしまって落ちるため、古いものを削除する
+        GLuint prevTextureName = self.baseEffect.texture2d1.name;
+        glDeleteTextures(1, &prevTextureName);
+        
+        GLKTextureInfo *textureInfo1 = [GLKTextureLoader
+                                        textureWithCGImage:cgImage
+                                        options:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                 [NSNumber numberWithBool:YES],
+                                                 GLKTextureLoaderOriginBottomLeft, nil]
+                                        error:NULL];
+        
+        self.baseEffect.texture2d1.name = textureInfo1.name;
+        self.baseEffect.texture2d1.target = textureInfo1.target;
+//        self.baseEffect.texture2d1.envMode = GLKTextureEnvModeDecal;
+        [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_S
+                                               value:GL_CLAMP_TO_EDGE];
+        [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_T
+                                               value:GL_CLAMP_TO_EDGE];
+
+        
+        CGImageRelease(cgImage);
+    } else {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+
 }
 
 @end

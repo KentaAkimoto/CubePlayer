@@ -23,6 +23,9 @@
 		371AA2021A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 371AA1FE1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m */; };
 		371AA2051A51B501002FCA6A /* beetle.png in Resources */ = {isa = PBXBuildFile; fileRef = 371AA2031A51B501002FCA6A /* beetle.png */; };
 		371AA2061A51B501002FCA6A /* leaves.gif in Resources */ = {isa = PBXBuildFile; fileRef = 371AA2041A51B501002FCA6A /* leaves.gif */; };
+		371AA2081A51B92E002FCA6A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA2071A51B92E002FCA6A /* AVFoundation.framework */; };
+		371AA20A1A51B942002FCA6A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA2091A51B942002FCA6A /* CoreMedia.framework */; };
+		371AA20C1A51B948002FCA6A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA20B1A51B948002FCA6A /* CoreGraphics.framework */; };
 		37410A471A50640C00009EAD /* CubePlayerCoreSampleSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37410A461A50640C00009EAD /* CubePlayerCoreSampleSwift.swift */; };
 		37FF6C631A504C100036A4A9 /* CubePlayerCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 37FF6C621A504C100036A4A9 /* CubePlayerCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		37FF6C691A504C100036A4A9 /* CubePlayerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FF6C5D1A504C100036A4A9 /* CubePlayerCore.framework */; };
@@ -58,6 +61,9 @@
 		371AA1FE1A51B400002FCA6A /* AGLKVertexAttribArrayBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGLKVertexAttribArrayBuffer.m; sourceTree = "<group>"; };
 		371AA2031A51B501002FCA6A /* beetle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beetle.png; sourceTree = "<group>"; };
 		371AA2041A51B501002FCA6A /* leaves.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = leaves.gif; sourceTree = "<group>"; };
+		371AA2071A51B92E002FCA6A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		371AA2091A51B942002FCA6A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		371AA20B1A51B948002FCA6A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		37410A461A50640C00009EAD /* CubePlayerCoreSampleSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CubePlayerCoreSampleSwift.swift; sourceTree = "<group>"; };
 		37FF6C5D1A504C100036A4A9 /* CubePlayerCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CubePlayerCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FF6C611A504C100036A4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +80,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				371AA20C1A51B948002FCA6A /* CoreGraphics.framework in Frameworks */,
+				371AA20A1A51B942002FCA6A /* CoreMedia.framework in Frameworks */,
+				371AA2081A51B92E002FCA6A /* AVFoundation.framework in Frameworks */,
 				371AA1ED1A519C33002FCA6A /* UIKit.framework in Frameworks */,
 				371AA1EB1A519C20002FCA6A /* QuartzCore.framework in Frameworks */,
 				371AA1E91A519C0F002FCA6A /* Foundation.framework in Frameworks */,
@@ -96,6 +105,9 @@
 		371AA1D91A519AE4002FCA6A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				371AA20B1A51B948002FCA6A /* CoreGraphics.framework */,
+				371AA2091A51B942002FCA6A /* CoreMedia.framework */,
+				371AA2071A51B92E002FCA6A /* AVFoundation.framework */,
 				371AA1EC1A519C33002FCA6A /* UIKit.framework */,
 				371AA1EA1A519C20002FCA6A /* QuartzCore.framework */,
 				371AA1E81A519C0F002FCA6A /* Foundation.framework */,

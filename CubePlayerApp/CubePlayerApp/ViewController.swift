@@ -29,7 +29,7 @@ class ViewController: UIViewController {
 
 
     @IBAction func tapButton(sender: UIButton) {
-        self.cubeViewController = CPCCubeViewController(nibName: "CPCCubeView", bundle: NSBundle(forClass: CPCCubeViewController.classForCoder()))
+        self.cubeViewController = CPCCubeViewController(url: NSBundle.mainBundle().URLForResource("sample_iPod", withExtension: "m4v"))
         self.cubeViewController?.view.frame = self.view.bounds
         self.presentViewController(self.cubeViewController!, animated: true) { () -> Void in
             
