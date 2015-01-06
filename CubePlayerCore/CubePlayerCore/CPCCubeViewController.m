@@ -88,47 +88,47 @@ SceneVertex;
 // Define vertex data for a triangle to use in example
 static const SceneVertex vertices[] =
 {
-    {{ 0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-    {{ 0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.166f*1, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.166f*1, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.166f*1, 0.0f}},
     
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {1.0f, 0.0f}},
-    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.0f, 0.0f}},
-    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {1.0f, 1.0f}},
-    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {1.0f, 1.0f}},
-    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.0f, 0.0f}},
-    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.0f, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*2, 0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*1, 0.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*2, 1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*2, 1.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*1, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*1, 1.0f}},
     
-    {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
-    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
-    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
-    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
-    {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
+    {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*3, 0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*2, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*2, 0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*2, 1.0f}},
     
-    {{-0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.0f, 0.0f}},
-    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
-    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
-    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.0f, 1.0f}},
-    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {1.0f, 0.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {1.0f, 1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*3, 0.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*4, 0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*4, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*4, 1.0f}},
     
-    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {1.0f, 1.0f}},
-    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 1.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {1.0f, 0.0f}},
-    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {1.0f, 0.0f}},
-    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 1.0f}},
-    {{-0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.0f, 0.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*5, 1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*4, 1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*5, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*5, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*4, 1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*4, 0.0f}},
     
-    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {1.0f, 0.0f}},
-    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
-    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {1.0f, 1.0f}},
-    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 0.0f}},
-    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.0f, 1.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*6, 0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*6, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*6, 1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 1.0f}},
 };
 
 
@@ -574,31 +574,27 @@ static const SceneVertex vertices[] =
     CMTime time = [_player currentTime];
     CMTime actualTime;
     NSError* error = nil;
+    
     CGImageRef cgImage = [_imageGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-    if (cgImage != nil) {
-/*
-        GLKTextureInfo *textureInfo0 = [GLKTextureLoader
-                                        textureWithCGImage:cgImage
-                                        options:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                 [NSNumber numberWithBool:YES],
-                                                 GLKTextureLoaderOriginBottomLeft, nil]
-                                        error:NULL];
+    
+    NSArray *images = @[[NSValue valueWithPointer:cgImage],
+                        [NSValue valueWithPointer:cgImage],
+                        [NSValue valueWithPointer:cgImage],
+                        [NSValue valueWithPointer:cgImage],
+                        [NSValue valueWithPointer:cgImage],
+                        [NSValue valueWithPointer:cgImage]];
+    
+    CGImageRef combinedCgImage = [self createCombinedImages:images];
+    CGImageRelease(cgImage);
+    
+    if (combinedCgImage != nil) {
         
-        self.baseEffect.texture2d0.name = textureInfo0.name;
-        self.baseEffect.texture2d0.target = textureInfo0.target;
-//        self.baseEffect.texture2d0.envMode = GLKTextureEnvModeDecal;
-        [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_S
-                                               value:GL_CLAMP_TO_EDGE];
-        [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_T
-                                               value:GL_CLAMP_TO_EDGE];
-
-*/
         // テクスチャバッファを新規に作り続けてしまって落ちるため、古いものを削除する
         GLuint prevTextureName = self.baseEffect.texture2d1.name;
         glDeleteTextures(1, &prevTextureName);
         
         GLKTextureInfo *textureInfo1 = [GLKTextureLoader
-                                        textureWithCGImage:cgImage
+                                        textureWithCGImage:combinedCgImage
                                         options:[NSDictionary dictionaryWithObjectsAndKeys:
                                                  [NSNumber numberWithBool:YES],
                                                  GLKTextureLoaderOriginBottomLeft, nil]
@@ -613,11 +609,81 @@ static const SceneVertex vertices[] =
                                                value:GL_CLAMP_TO_EDGE];
 
         
-        CGImageRelease(cgImage);
+        CGImageRelease(combinedCgImage);
     } else {
         NSLog(@"%@", [error localizedDescription]);
     }
 
+}
+
+- (CGImageRef)createCombinedImages:(NSArray*)images
+{
+//    NSArray *array = @[[NSValue valueWithPointer:imgA.CGImage]];
+
+/*
+    int widthA = CGImageGetWidth(imgA.CGImage);
+    int widthB = CGImageGetWidth(imgB.CGImage);
+    int height = CGImageGetHeight(imgA.CGImage);
+*/
+    
+    int totalWidth = 0;
+    int maxWidth = 0;
+    int maxHeight = 0;
+
+    CGContextRef bitmapContext = nil;
+    unsigned char *bitmap = nil;
+    
+    for (int i = 0; i < [images count]; i++) {
+        
+        CGImageRef image = ((NSValue*)images[i]).pointerValue;
+        
+        if (i == 0) {
+            
+            maxWidth = (int)CGImageGetWidth(image) * (int)[images count];
+            maxHeight = (int)CGImageGetHeight(image);
+
+            //CGContextを作成
+            bitmap = malloc(maxWidth * maxHeight * sizeof(unsigned char) * 4);
+            bitmapContext = CGBitmapContextCreate(bitmap,
+                                                               maxWidth,
+                                                               maxHeight,
+                                                               8,
+                                                               maxWidth * 4,
+                                                               CGColorSpaceCreateDeviceRGB(),
+                                                                  // kCGImageAlphaPremultipliedFirst);
+                                                               kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+        }
+        
+        if (bitmapContext != nil) {
+            //imgAをbitmapContextに描画
+            CGContextDrawImage(bitmapContext, CGRectMake(totalWidth, 0, (int)CGImageGetWidth(image), maxHeight), image);
+            totalWidth += (int)CGImageGetWidth(image);
+        }
+    }
+    
+    CGImageRef imgRef = nil;
+    if (bitmapContext != nil) {
+
+        //CGContextからCGImageを作成
+        imgRef = CGBitmapContextCreateImage (bitmapContext);
+    }
+/*
+    //CGImageからUIImageを作成
+    UIImage *imgC = [UIImage imageWithCGImage:imgRef];
+    NSData *data = UIImagePNGRepresentation(imgC);
+    NSString *filePath = [NSString stringWithFormat:@"%@/test.png" , [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]];
+    NSLog(@"%@", filePath);
+    if ([data writeToFile:filePath atomically:YES]) {
+        NSLog(@"OK");
+    } else {
+        NSLog(@"Error");
+    }
+*/
+    //bitmapを解放
+    free(bitmap);
+    CGContextRelease(bitmapContext);
+    
+    return imgRef;
 }
 
 @end
