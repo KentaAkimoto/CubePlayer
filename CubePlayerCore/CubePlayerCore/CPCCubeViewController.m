@@ -45,6 +45,8 @@
 @property (strong, nonatomic) AVAssetImageGenerator *imageGen;
 @property (assign, nonatomic) CGContextRef cgContext;
 
+@property (strong, nonatomic) UIImage *testImage;
+
 - (BOOL)loadShaders;
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
 - (BOOL)linkProgram:(GLuint)prog;
@@ -139,6 +141,10 @@ static const SceneVertex vertices[] =
 {
     [super viewDidLoad];
     
+//    self.testImage = [UIImage imageNamed:@"test.png" inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
+    self.testImage = [UIImage imageNamed:@"beetle.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+
+    
     // Verify the type of view created automatically by the
     // Interface Builder storyboard
     GLKView *view = (GLKView *)self.view;
@@ -186,7 +192,7 @@ static const SceneVertex vertices[] =
     // Setup texture0
     CGImageRef imageRef0 =
     [[UIImage imageNamed:@"leaves.gif" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] CGImage];
-    
+/*
     GLKTextureInfo *textureInfo0 = [GLKTextureLoader
                                     textureWithCGImage:imageRef0
                                     options:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -200,7 +206,7 @@ static const SceneVertex vertices[] =
                                            value:GL_REPEAT];
     [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_T
                                            value:GL_REPEAT];
-    
+
     // Setup texture1
     CGImageRef imageRef1 =
     [[UIImage imageNamed:@"beetle.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] CGImage];
@@ -219,7 +225,7 @@ static const SceneVertex vertices[] =
                                            value:GL_REPEAT];
     [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_T
                                            value:GL_REPEAT];
-    
+*/
     
     [self setupPlayer];
 }
@@ -285,12 +291,12 @@ static const SceneVertex vertices[] =
                            numberOfCoordinates:2
                                   attribOffset:offsetof(SceneVertex, textureCoords)
                                   shouldEnable:YES];
-    
+
     [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord1
                            numberOfCoordinates:2
                                   attribOffset:offsetof(SceneVertex, textureCoords)
                                   shouldEnable:YES];
-    
+
     [self.baseEffect prepareToDraw];
     
     // Draw triangles using baseEffect
@@ -585,47 +591,48 @@ static const SceneVertex vertices[] =
                         [NSValue valueWithPointer:cgImage]];
     
     CGImageRef combinedCgImage = [self createCombinedImages:images];
+    //CGImageRef combinedCgImage = cgImage;
+
     CGImageRelease(cgImage);
     
     if (combinedCgImage != nil) {
         
         // テクスチャバッファを新規に作り続けてしまって落ちるため、古いものを削除する
-        GLuint prevTextureName = self.baseEffect.texture2d1.name;
+        GLuint prevTextureName = self.baseEffect.texture2d0.name;
         glDeleteTextures(1, &prevTextureName);
-        
-        GLKTextureInfo *textureInfo1 = [GLKTextureLoader
+        GLKTextureInfo *textureInfo0 = [GLKTextureLoader
                                         textureWithCGImage:combinedCgImage
                                         options:[NSDictionary dictionaryWithObjectsAndKeys:
                                                  [NSNumber numberWithBool:YES],
                                                  GLKTextureLoaderOriginBottomLeft, nil]
                                         error:NULL];
+
+//        GLKTextureInfo *textureInfo0 = [GLKTextureLoader
+//                                        textureWithCGImage:self.testImage.CGImage
+//                                        options:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                                 [NSNumber numberWithBool:YES],
+//                                                 GLKTextureLoaderOriginBottomLeft, nil]
+//
+//                                        error:NULL];
         
-        self.baseEffect.texture2d1.name = textureInfo1.name;
-        self.baseEffect.texture2d1.target = textureInfo1.target;
-//        self.baseEffect.texture2d1.envMode = GLKTextureEnvModeDecal;
-        [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_S
+        self.baseEffect.texture2d0.name = textureInfo0.name;
+        self.baseEffect.texture2d0.target = textureInfo0.target;
+        self.baseEffect.texture2d0.envMode = GLKTextureEnvModeReplace;
+        [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_S
                                                value:GL_CLAMP_TO_EDGE];
-        [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_T
+        [self.baseEffect.texture2d0 aglkSetParameter:GL_TEXTURE_WRAP_T
                                                value:GL_CLAMP_TO_EDGE];
 
-        
+
         CGImageRelease(combinedCgImage);
     } else {
-        NSLog(@"%@", [error localizedDescription]);
+        NSLog(@"time:%f actualTime:%f error:%@", CMTimeGetSeconds(time), CMTimeGetSeconds(actualTime), [error localizedDescription]);
     }
 
 }
 
 - (CGImageRef)createCombinedImages:(NSArray*)images
 {
-//    NSArray *array = @[[NSValue valueWithPointer:imgA.CGImage]];
-
-/*
-    int widthA = CGImageGetWidth(imgA.CGImage);
-    int widthB = CGImageGetWidth(imgB.CGImage);
-    int height = CGImageGetHeight(imgA.CGImage);
-*/
-    
     int totalWidth = 0;
     int maxWidth = 0;
     int maxHeight = 0;
@@ -643,15 +650,38 @@ static const SceneVertex vertices[] =
             maxHeight = (int)CGImageGetHeight(image);
 
             //CGContextを作成
-            bitmap = malloc(maxWidth * maxHeight * sizeof(unsigned char) * 4);
+//            bitmap = malloc(maxWidth * maxHeight * sizeof(unsigned char) * 4);
+            bitmap = calloc(maxWidth * maxHeight * 4 , sizeof(unsigned char));
+
+            CGBitmapInfo bitmapInfo = kCGBitmapByteOrder32Little;
+            switch (CGImageGetAlphaInfo(image)) {
+                case kCGImageAlphaPremultipliedLast:
+                case kCGImageAlphaPremultipliedFirst:
+                    bitmapInfo |= kCGImageAlphaPremultipliedFirst;
+                    break;
+                case kCGImageAlphaLast:
+                case kCGImageAlphaFirst:
+                    bitmapInfo |= kCGImageAlphaPremultipliedLast;
+                    break;
+                case kCGImageAlphaNoneSkipFirst:
+                    bitmapInfo |= kCGImageAlphaNoneSkipFirst;
+                    break;
+                default:
+                    bitmapInfo |= kCGImageAlphaNoneSkipLast;
+                    break;
+            }
+
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
             bitmapContext = CGBitmapContextCreate(bitmap,
                                                                maxWidth,
                                                                maxHeight,
                                                                8,
                                                                maxWidth * 4,
-                                                               CGColorSpaceCreateDeviceRGB(),
+                                                               colorSpace,
                                                                   // kCGImageAlphaPremultipliedFirst);
-                                                               kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+                                                               //kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+                                                  bitmapInfo);
+            CGColorSpaceRelease(colorSpace);
         }
         
         if (bitmapContext != nil) {
@@ -663,7 +693,7 @@ static const SceneVertex vertices[] =
     
     CGImageRef imgRef = nil;
     if (bitmapContext != nil) {
-
+        
         //CGContextからCGImageを作成
         imgRef = CGBitmapContextCreateImage (bitmapContext);
     }
@@ -671,7 +701,7 @@ static const SceneVertex vertices[] =
     //CGImageからUIImageを作成
     UIImage *imgC = [UIImage imageWithCGImage:imgRef];
     NSData *data = UIImagePNGRepresentation(imgC);
-    NSString *filePath = [NSString stringWithFormat:@"%@/test.png" , [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]];
+    NSString *filePath = [NSString stringWithFormat:@"%@/test2.png" , [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]];
     NSLog(@"%@", filePath);
     if ([data writeToFile:filePath atomically:YES]) {
         NSLog(@"OK");
@@ -679,6 +709,7 @@ static const SceneVertex vertices[] =
         NSLog(@"Error");
     }
 */
+    
     //bitmapを解放
     free(bitmap);
     CGContextRelease(bitmapContext);

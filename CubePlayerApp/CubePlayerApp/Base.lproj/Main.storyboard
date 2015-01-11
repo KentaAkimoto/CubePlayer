@@ -18,29 +18,86 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xc-Nm-Qpk">
-                                <rect key="frame" x="36" y="40" width="46" height="30"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iB4-OW-clv" userLabel="cubeContainerView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Xc-Nm-Qpk">
+                                        <rect key="frame" x="168" y="242" width="37" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="uQt-qb-XBu"/>
+                                            <constraint firstAttribute="width" constant="46" id="vbV-az-0t3"/>
+                                        </constraints>
+                                        <state key="normal" title="Cube">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7P5-Hb-KNq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cqd-aB-tS9" userLabel="controlPanelView">
+                                <rect key="frame" x="0.0" y="535" width="600" height="65"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NbN-a1-cvV">
+                                        <rect key="frame" x="505" y="18" width="32" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="46" id="GXZ-VM-0i7"/>
+                                            <constraint firstAttribute="height" constant="30" id="WMk-VH-tE7"/>
+                                        </constraints>
+                                        <state key="normal" title="Print">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Wvo-gC-MD9" kind="show" id="PIE-aB-Sk9"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.33349273779999999" green="0.65625" blue="0.1826800331" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="uQt-qb-XBu"/>
-                                    <constraint firstAttribute="width" constant="46" id="vbV-az-0t3"/>
+                                    <constraint firstItem="NbN-a1-cvV" firstAttribute="top" secondItem="cqd-aB-tS9" secondAttribute="top" constant="18" id="OyB-24-YRy"/>
+                                    <constraint firstAttribute="trailing" secondItem="NbN-a1-cvV" secondAttribute="trailing" constant="49" id="Q18-do-HK2"/>
+                                    <constraint firstAttribute="bottom" secondItem="NbN-a1-cvV" secondAttribute="bottom" constant="17" id="hS1-Gj-NQZ"/>
                                 </constraints>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tapButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="7P5-Hb-KNq"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9Xc-Nm-Qpk" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="20" id="36c-Mx-OfG"/>
-                            <constraint firstItem="9Xc-Nm-Qpk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="20" id="xac-6k-Vij"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cqd-aB-tS9" secondAttribute="bottom" id="DTu-Xc-DlP"/>
+                            <constraint firstItem="cqd-aB-tS9" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="F7Q-K1-P5l"/>
+                            <constraint firstItem="iB4-OW-clv" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="Rav-I2-E3K"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cqd-aB-tS9" secondAttribute="trailing" id="WZ9-sg-5wT"/>
+                            <constraint firstItem="iB4-OW-clv" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="YLa-2W-4S7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iB4-OW-clv" secondAttribute="trailing" constant="-16" id="Ybf-Cb-Dy6"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="controlPanelView" destination="cqd-aB-tS9" id="COU-AM-KZr"/>
+                        <outlet property="cubeAreaView" destination="iB4-OW-clv" id="i1u-8f-Xi4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-366" y="386"/>
+        </scene>
+        <!--Print View Controller-->
+        <scene sceneID="GYa-88-j3o">
+            <objects>
+                <viewController id="Wvo-gC-MD9" customClass="PrintViewController" customModule="CubePlayerApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eMv-9v-CCd"/>
+                        <viewControllerLayoutGuide type="bottom" id="1yY-dd-cKA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="69K-Lo-cwh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ry7-4Z-N4Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="398" y="382"/>
         </scene>
     </scenes>
 </document>

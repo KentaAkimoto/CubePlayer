@@ -11,6 +11,9 @@ import CubePlayerCore
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var cubeAreaView: UIView!
+    @IBOutlet weak var controlPanelView: UIView!
+    
     var cubeViewController:CPCCubeViewController?
 
     override func viewDidLoad() {
@@ -29,13 +32,21 @@ class ViewController: UIViewController {
 
 
     @IBAction func tapButton(sender: UIButton) {
-        self.cubeViewController = CPCCubeViewController(url: NSBundle.mainBundle().URLForResource("sample_iPod", withExtension: "m4v"))
-        self.cubeViewController?.view.frame = self.view.bounds
+//        self.cubeViewController = CPCCubeViewController(url: NSBundle.mainBundle().URLForResource("sample_iPod", withExtension: "m4v"))
+//        self.cubeViewController = CPCCubeViewController(url: NSBundle.mainBundle().URLForResource("iori", withExtension: "mp4"))
+        self.cubeViewController = CPCCubeViewController(url: NSBundle.mainBundle().URLForResource("mp4_h264_aac", withExtension: "mp4"))
+
+        self.cubeViewController?.view.frame = self.cubeAreaView.bounds
+        /*
         self.presentViewController(self.cubeViewController!, animated: true) { () -> Void in
             
         }
-        
+        */
+        self.cubeAreaView.addSubview(self.cubeViewController!.view)
     }
     
+    @IBAction func printButton(sender: AnyObject) {
+        
+    }
 }
 

@@ -16,6 +16,10 @@
 		371AA1F81A51A5D5002FCA6A /* CubePlayerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */; };
 		371AA1F91A51A5D5002FCA6A /* CubePlayerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		37410A451A50626C00009EAD /* CubePlayerAppSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 37410A441A50626C00009EAD /* CubePlayerAppSample.m */; };
+		3750D56E1A6193C70053EF11 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 3750D56D1A6193C70053EF11 /* test.png */; };
+		3750D5701A61A6760053EF11 /* iori.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3750D56F1A61A6760053EF11 /* iori.mp4 */; };
+		3752E8C71A5F631600DA5406 /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752E8C61A5F631600DA5406 /* PrintViewController.swift */; };
+		3752E8C91A5F727A00DA5406 /* mp4_h264_aac.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3752E8C81A5F727A00DA5406 /* mp4_h264_aac.mp4 */; };
 		37FF6C341A50447B0036A4A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF6C331A50447B0036A4A9 /* AppDelegate.swift */; };
 		37FF6C361A50447B0036A4A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37FF6C351A50447B0036A4A9 /* ViewController.swift */; };
 		37FF6C391A50447B0036A4A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37FF6C371A50447B0036A4A9 /* Main.storyboard */; };
@@ -59,6 +63,10 @@
 		37410A421A50626B00009EAD /* CubePlayerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CubePlayerApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		37410A431A50626C00009EAD /* CubePlayerAppSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubePlayerAppSample.h; sourceTree = "<group>"; };
 		37410A441A50626C00009EAD /* CubePlayerAppSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubePlayerAppSample.m; sourceTree = "<group>"; };
+		3750D56D1A6193C70053EF11 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
+		3750D56F1A61A6760053EF11 /* iori.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = iori.mp4; sourceTree = "<group>"; };
+		3752E8C61A5F631600DA5406 /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
+		3752E8C81A5F727A00DA5406 /* mp4_h264_aac.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = mp4_h264_aac.mp4; sourceTree = "<group>"; };
 		37FF6C2E1A50447B0036A4A9 /* CubePlayerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubePlayerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37FF6C321A50447B0036A4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37FF6C331A50447B0036A4A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +106,9 @@
 		371AA1CE1A512CC8002FCA6A /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				3750D56F1A61A6760053EF11 /* iori.mp4 */,
+				3750D56D1A6193C70053EF11 /* test.png */,
+				3752E8C81A5F727A00DA5406 /* mp4_h264_aac.mp4 */,
 				371AA1CF1A512CC8002FCA6A /* sample_iPod.m4v */,
 			);
 			name = resources;
@@ -129,6 +140,7 @@
 			children = (
 				37FF6C331A50447B0036A4A9 /* AppDelegate.swift */,
 				37FF6C351A50447B0036A4A9 /* ViewController.swift */,
+				3752E8C61A5F631600DA5406 /* PrintViewController.swift */,
 				37FF6C371A50447B0036A4A9 /* Main.storyboard */,
 				37FF6C3A1A50447B0036A4A9 /* Images.xcassets */,
 				37FF6C3C1A50447B0036A4A9 /* LaunchScreen.xib */,
@@ -262,7 +274,10 @@
 				37FF6C391A50447B0036A4A9 /* Main.storyboard in Resources */,
 				371AA1D01A512CC8002FCA6A /* sample_iPod.m4v in Resources */,
 				37FF6C3E1A50447B0036A4A9 /* LaunchScreen.xib in Resources */,
+				3750D5701A61A6760053EF11 /* iori.mp4 in Resources */,
 				37FF6C3B1A50447B0036A4A9 /* Images.xcassets in Resources */,
+				3752E8C91A5F727A00DA5406 /* mp4_h264_aac.mp4 in Resources */,
+				3750D56E1A6193C70053EF11 /* test.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3752E8C71A5F631600DA5406 /* PrintViewController.swift in Sources */,
 				37FF6C361A50447B0036A4A9 /* ViewController.swift in Sources */,
 				37410A451A50626C00009EAD /* CubePlayerAppSample.m in Sources */,
 				37FF6C341A50447B0036A4A9 /* AppDelegate.swift in Sources */,
