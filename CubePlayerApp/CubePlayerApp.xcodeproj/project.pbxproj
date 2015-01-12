@@ -16,6 +16,9 @@
 		371AA1F81A51A5D5002FCA6A /* CubePlayerCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */; };
 		371AA1F91A51A5D5002FCA6A /* CubePlayerCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		37410A451A50626C00009EAD /* CubePlayerAppSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 37410A441A50626C00009EAD /* CubePlayerAppSample.m */; };
+		3741967A1A62F6F60093C839 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374196791A62F6F60093C839 /* CoreText.framework */; };
+		3741967C1A62FD210093C839 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3741967B1A62FD210093C839 /* CoreImage.framework */; };
+		374197AB1A6422E6002587D1 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374197AA1A6422E6002587D1 /* QuickLook.framework */; };
 		3750D56E1A6193C70053EF11 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 3750D56D1A6193C70053EF11 /* test.png */; };
 		3750D5701A61A6760053EF11 /* iori.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3750D56F1A61A6760053EF11 /* iori.mp4 */; };
 		3752E8C71A5F631600DA5406 /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752E8C61A5F631600DA5406 /* PrintViewController.swift */; };
@@ -63,6 +66,9 @@
 		37410A421A50626B00009EAD /* CubePlayerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CubePlayerApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		37410A431A50626C00009EAD /* CubePlayerAppSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubePlayerAppSample.h; sourceTree = "<group>"; };
 		37410A441A50626C00009EAD /* CubePlayerAppSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubePlayerAppSample.m; sourceTree = "<group>"; };
+		374196791A62F6F60093C839 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		3741967B1A62FD210093C839 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		374197AA1A6422E6002587D1 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		3750D56D1A6193C70053EF11 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		3750D56F1A61A6760053EF11 /* iori.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = iori.mp4; sourceTree = "<group>"; };
 		3752E8C61A5F631600DA5406 /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +90,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				374197AB1A6422E6002587D1 /* QuickLook.framework in Frameworks */,
+				3741967C1A62FD210093C839 /* CoreImage.framework in Frameworks */,
+				3741967A1A62F6F60093C839 /* CoreText.framework in Frameworks */,
 				371AA1E71A519C04002FCA6A /* UIKit.framework in Frameworks */,
 				371AA1F81A51A5D5002FCA6A /* CubePlayerCore.framework in Frameworks */,
 				371AA1E51A519BEE002FCA6A /* QuartzCore.framework in Frameworks */,
@@ -180,6 +189,9 @@
 		37FF6C7C1A505F8D0036A4A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				374197AA1A6422E6002587D1 /* QuickLook.framework */,
+				3741967B1A62FD210093C839 /* CoreImage.framework */,
+				374196791A62F6F60093C839 /* CoreText.framework */,
 				371AA1F71A51A5D5002FCA6A /* CubePlayerCore.framework */,
 				371AA1E61A519C04002FCA6A /* UIKit.framework */,
 				371AA1E41A519BEE002FCA6A /* QuartzCore.framework */,
