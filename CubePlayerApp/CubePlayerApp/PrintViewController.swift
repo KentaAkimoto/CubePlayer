@@ -14,6 +14,7 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
 
     var pdfFilePath:String?
     var quickLookViewController:QLPreviewController?
+    var images:Array<UIImage> = []
     
 //    required init(coder aDecoder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
@@ -42,6 +43,47 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    private func resizeImage(image:UIImage, size:CGSize) -> UIImage {
+        var resultImage = image
+        // UIImageを最近傍法を適用しつつリサイズする
+        UIGraphicsBeginImageContext(size)
+        var context:CGContextRef = UIGraphicsGetCurrentContext()
+        CGContextSetInterpolationQuality(context, kCGInterpolationNone) //補間方法の指定
+        resultImage.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        resultImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resultImage
+    }
+    
+    private func createQR(inputMessage:String, size:CGSize) -> UIImage {
+        // QRコード作成用のフィルターを作成・パラメータの初期化
+        var ciFilter:CIFilter = CIFilter(name:"CIQRCodeGenerator")
+        ciFilter.setDefaults()
+        
+        // 格納する文字列をNSData形式（UTF-8でエンコード）で用意して設定
+        var qrString = inputMessage
+        var data:NSData = qrString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
+        ciFilter.setValue(data, forKey:"inputMessage")
+        
+        // 誤り訂正レベルを「L（低い）」に設定
+        ciFilter.setValue("L", forKey:"inputCorrectionLevel")
+        
+        // Core Imageコンテキストを取得したらCGImage→UIImageと変換して描画
+        var ciContext:CIContext = CIContext(options: nil)
+        var cgimg:CGImageRef = ciContext.createCGImage(ciFilter.outputImage, fromRect: ciFilter.outputImage.extent())
+        var image:UIImage = UIImage(CGImage:cgimg, scale: 1.0, orientation: UIImageOrientation.Up)!
+
+        // UIImageを最近傍法を適用しつつリサイズする
+        UIGraphicsBeginImageContext(size)
+        var context:CGContextRef = UIGraphicsGetCurrentContext()
+        CGContextSetInterpolationQuality(context, kCGInterpolationNone) //補間方法の指定
+        image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image;
+    }
     
     private func preview() {
         self.quickLookViewController = QLPreviewController()
@@ -81,6 +123,21 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         
         self.drawOneRect(context, rect:CGRectMake(50, 254, 100, 100))
         self.drawOneRect(context, rect:CGRectMake(50, 356, 100, 100))
+        
+        // imageを貼る
+        var resizedImage:UIImage? = nil
+        for image in self.images {
+            resizedImage = resizeImage(image, size: CGSizeMake(100, 100))
+            resizedImage!.drawAtPoint(CGPointMake(50, 152))
+            resizedImage!.drawAtPoint(CGPointMake(152, 152))
+            resizedImage!.drawAtPoint(CGPointMake(254, 152))
+            resizedImage!.drawAtPoint(CGPointMake(50, 254))
+            resizedImage!.drawAtPoint(CGPointMake(50, 356))
+        }
+        
+        // QRコード
+        var qr:UIImage = self.createQR("hello world", size:CGSizeMake(100, 100))
+        qr.drawAtPoint(CGPointMake(50, 50))
         
         // PDFコンテキストを閉じる
         UIGraphicsEndPDFContext();
@@ -122,6 +179,9 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
     }
     
     @IBAction func tapPrintButton(sender: AnyObject) {
+        
+        self.images = [UIImage(named: "test.png", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)!];
+        
         makePdf()
         preview()
     }
