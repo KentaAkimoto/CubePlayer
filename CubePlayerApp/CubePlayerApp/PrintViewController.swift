@@ -108,20 +108,24 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         var rect:CGRect = CGRectMake(0, 0, size.width, size.height)
         
         // 画像を描画する
-        var point:CGPoint = CGPointMake(0, 200)
-        var image:UIImage = UIImage(named: "test.png", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)!
-        image.drawAtPoint(point)
+//        var point:CGPoint = CGPointMake(0, 200)
+//        var image:UIImage = UIImage(named: "test.png", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)!
+//        image.drawAtPoint(point)
         
-        //四角形を描画
         var context:CGContextRef = UIGraphicsGetCurrentContext()  // コンテキストを取得
 
+        //四角形
+        // box1
         self.drawOneRect(context, rect:CGRectMake(50, 50, 100, 100))
-        
+        // box2
         self.drawOneRect(context, rect:CGRectMake(50, 152, 100, 100))
+        // box3
         self.drawOneRect(context, rect:CGRectMake(152, 152, 100, 100))
+        // box4
         self.drawOneRect(context, rect:CGRectMake(254, 152, 100, 100))
-        
+        // box5
         self.drawOneRect(context, rect:CGRectMake(50, 254, 100, 100))
+        // box6
         self.drawOneRect(context, rect:CGRectMake(50, 356, 100, 100))
         
         // imageを貼る
@@ -139,8 +143,29 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         var qr:UIImage = self.createQR("hello world", size:CGSizeMake(100, 100))
         qr.drawAtPoint(CGPointMake(50, 50))
         
+        // のりしろ box1
+        self.drawOneNorishiroTop(CGRectMake(50, 50, 100, 100))
+        self.drawOneNorishiroLeft(CGRectMake(50, 50, 100, 100))
+        self.drawOneNorishiroRight(CGRectMake(50, 50, 100, 100))
+        // のりしろ box2
+        self.drawOneNorishiroLeft(CGRectMake(50, 152, 100, 100))
+        // のりしろ box3
+        self.drawOneNorishiroTop(CGRectMake(152, 152, 100, 100))
+        self.drawOneNorishiroBottom(CGRectMake(152, 152, 100, 100))
+        // のりしろ box4
+        self.drawOneNorishiroTop(CGRectMake(254, 152, 100, 100))
+        self.drawOneNorishiroBottom(CGRectMake(254, 152, 100, 100))
+        self.drawOneNorishiroRight(CGRectMake(254, 152, 100, 100))
+        // のりしろ box5
+        self.drawOneNorishiroLeft(CGRectMake(50, 254, 100, 100))
+        self.drawOneNorishiroRight(CGRectMake(50, 254, 100, 100))
+        // のりしろ box6
+        self.drawOneNorishiroLeft(CGRectMake(50, 356, 100, 100))
+        self.drawOneNorishiroRight(CGRectMake(50, 356, 100, 100))
+        self.drawOneNorishiroBottom(CGRectMake(50, 356, 100, 100))
+
         // PDFコンテキストを閉じる
-        UIGraphicsEndPDFContext();
+        UIGraphicsEndPDFContext()
     }
 
     private func drawOneRect(context:CGContextRef, rect:CGRect) {
@@ -149,15 +174,84 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         CGContextSetLineWidth(context, 2.0)  // 12ptに設定
         // 線の色を指定
         CGContextSetRGBStrokeColor(context, 1, 0, 1, 1)  // 青色に設定
-
         CGContextStrokeRect(context, rect)  // 四角形の描画
-        
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 1.0)  // 塗りつぶしの色を指定
-        
         CGContextFillRect(context, rect)  // 四角形を塗りつぶす
+    }
+
+    private func drawOneNorishiroTop(rect:CGRect) {
+        var line = UIBezierPath()
+        line.lineWidth = 1
+        line.lineCapStyle = kCGLineCapRound
+        // 「/」
+        line.moveToPoint(CGPointMake(rect.origin.x, rect.origin.y-1))
+        line.addLineToPoint(CGPointMake(rect.origin.x+10,rect.origin.y-10))
+        // 「-」
+        line.moveToPoint(CGPointMake(rect.origin.x+10,rect.origin.y-10))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x-10,rect.origin.y-10))
+        // 「\」
+        line.moveToPoint(CGPointMake(rect.width+rect.origin.x-10,rect.origin.y-10))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x,rect.origin.y-1))
+        
+        line.stroke()
+
+    }
+
+    private func drawOneNorishiroBottom(rect:CGRect) {
+        var line = UIBezierPath()
+        line.lineWidth = 1
+        line.lineCapStyle = kCGLineCapRound
+        // 「\」
+        line.moveToPoint(CGPointMake(rect.origin.x, rect.height+rect.origin.y+1))
+        line.addLineToPoint(CGPointMake(rect.origin.x+10,rect.height+rect.origin.y+10))
+        // 「-」
+        line.moveToPoint(CGPointMake(rect.origin.x+10,rect.height+rect.origin.y+10))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x-10,rect.height+rect.origin.y+10))
+        // 「/」
+        line.moveToPoint(CGPointMake(rect.width+rect.origin.x-10,rect.height+rect.origin.y+10))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x,rect.height+rect.origin.y+1))
+        
+        line.stroke()
         
     }
 
+    private func drawOneNorishiroLeft(rect:CGRect) {
+        var line = UIBezierPath()
+        line.lineWidth = 1
+        line.lineCapStyle = kCGLineCapRound
+        // 「/」
+        line.moveToPoint(CGPointMake(rect.origin.x-1, rect.origin.y))
+        line.addLineToPoint(CGPointMake(rect.origin.x-10,rect.origin.y+10))
+        // 「|」
+        line.moveToPoint(CGPointMake(rect.origin.x-10,rect.origin.y+10))
+        line.addLineToPoint(CGPointMake(rect.origin.x-10,rect.height+rect.origin.y-10))
+        // 「\」
+        line.moveToPoint(CGPointMake(rect.origin.x-10,rect.height+rect.origin.y-10))
+        line.addLineToPoint(CGPointMake(rect.origin.x-1,rect.height+rect.origin.y))
+        
+        line.stroke()
+        
+    }
+
+    private func drawOneNorishiroRight(rect:CGRect) {
+        var line = UIBezierPath()
+        line.lineWidth = 1
+        line.lineCapStyle = kCGLineCapRound
+        
+        // 「\」
+        line.moveToPoint(CGPointMake(rect.width+rect.origin.x+1,rect.origin.y))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x+10,rect.origin.y+10))
+        // 「|」
+        line.moveToPoint(CGPointMake(rect.width+rect.origin.x+10,rect.origin.y+10))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x+10,rect.height+rect.origin.y-10))
+        // 「/」
+        line.moveToPoint(CGPointMake(rect.width+rect.origin.x+10, rect.height+rect.origin.y-10))
+        line.addLineToPoint(CGPointMake(rect.width+rect.origin.x+1,rect.height+rect.origin.y))
+        
+        line.stroke()
+        
+    }
+    
     // MARK: - QuickLook
     /*!
     * @abstract Returns the number of items that the preview controller should preview.
