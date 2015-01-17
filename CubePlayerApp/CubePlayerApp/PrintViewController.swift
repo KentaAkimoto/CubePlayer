@@ -103,25 +103,35 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         var size:CGSize = CGSizeMake(1240, 1754) //self.view.bounds.size;
         UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, size.width, size.height), nil)
         
-        // 文字列を描画する
-        var title = "pdfですよ"
-        var rect:CGRect = CGRectMake(0, 0, size.width, size.height)
-        
-        // 画像を描画する
-//        var point:CGPoint = CGPointMake(0, 200)
-//        var image:UIImage = UIImage(named: "test.png", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)!
-//        image.drawAtPoint(point)
-        
         var context:CGContextRef = UIGraphicsGetCurrentContext()  // コンテキストを取得
 
-        let boxWidth:CGFloat = 100.0
-        let boxHeight:CGFloat = 100.0
-        let boxRect:Array<CGRect> = [CGRectMake(152,  50, boxWidth, boxHeight),
-                                    CGRectMake( 50, 152, boxWidth, boxHeight),
-                                    CGRectMake(152, 152, boxWidth, boxHeight),
-                                    CGRectMake(254, 152, boxWidth, boxHeight),
-                                    CGRectMake(152, 254, boxWidth, boxHeight),
-                                    CGRectMake(152, 356, boxWidth, boxHeight)]
+        let boxWidth:CGFloat = 200.0
+        let boxHeight:CGFloat = 200.0
+        let lineMargin:CGFloat = 1.0 // 外枠線幅分のマージン
+        
+        var basePoint:CGPoint = CGPointMake(150, 150) // 展開図書き出しの基準点
+        self.drawCubeNet(context, boxWidth: boxWidth, boxHeight: boxHeight, lineMargin: lineMargin, basePoint: basePoint)
+        
+        basePoint = CGPointMake(550, 800)
+        self.drawCubeNet(context, boxWidth: boxWidth, boxHeight: boxHeight, lineMargin: lineMargin, basePoint: basePoint)
+        
+        // PDFコンテキストを閉じる
+        UIGraphicsEndPDFContext()
+    }
+
+    private func drawCubeNet(context:CGContextRef, boxWidth:CGFloat, boxHeight:CGFloat, lineMargin:CGFloat, basePoint:CGPoint) {
+        
+        let boxSideWidth:CGFloat = boxWidth+(lineMargin*2) // 1辺のwidth(マージン含む)
+        let boxSideHeight:CGFloat = boxHeight+(lineMargin*2) // 1辺のheight（マージン含む）
+        
+        let boxRect:Array<CGRect> = [
+            CGRectMake(basePoint.x+boxSideWidth,     basePoint.y,                   boxWidth, boxHeight),
+            CGRectMake(basePoint.x,                  basePoint.y+boxSideHeight,     boxWidth, boxHeight),
+            CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+boxSideHeight,     boxWidth, boxHeight),
+            CGRectMake(basePoint.x+(boxSideWidth*2), basePoint.y+boxSideHeight,     boxWidth, boxHeight),
+            CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+(boxSideHeight*2), boxWidth, boxHeight),
+            CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+(boxSideHeight*3), boxWidth, boxHeight)
+        ]
         
         //四角形
         // box1
@@ -173,23 +183,19 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         self.drawOneNorishiroRight(boxRect[5])
         self.drawOneNorishiroBottom(boxRect[5])
 
-        // PDFコンテキストを閉じる
-        UIGraphicsEndPDFContext()
     }
-
+    
     private func drawOneRect(context:CGContextRef, rect:CGRect) {
 
-        // 線の太さを指定
-        CGContextSetLineWidth(context, 2.0)  // 12ptに設定
-        // 線の色を指定
-        CGContextSetRGBStrokeColor(context, 1, 0, 1, 1)  // 青色に設定
+        CGContextSetLineWidth(context, 2.0)  // 線の太さ pt
+        CGContextSetRGBStrokeColor(context, 1, 0, 1, 1)  // 線の色
         CGContextStrokeRect(context, rect)  // 四角形の描画
-        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 1.0)  // 塗りつぶしの色を指定
+        CGContextSetRGBFillColor(context, 0.5, 0.5, 0.5, 1.0)  // 塗りつぶしの色を指定
         CGContextFillRect(context, rect)  // 四角形を塗りつぶす
     }
 
     private func drawOneNorishiroTop(rect:CGRect) {
-        let margin = rect.width / 4
+        let margin = rect.height / 4
         
         var line = UIBezierPath()
         line.lineWidth = 1
@@ -209,7 +215,7 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
     }
 
     private func drawOneNorishiroBottom(rect:CGRect) {
-        let margin = rect.width / 4
+        let margin = rect.height / 4
 
         var line = UIBezierPath()
         line.lineWidth = 1
