@@ -19,6 +19,9 @@
     GLKMatrix4 _modelViewProjectionMatrix;
     GLKMatrix3 _normalMatrix;
     GLfloat _rotation;
+    GLfloat _fixRotationX;
+    GLfloat _fixRotationY;
+    GLfloat _fixRotationZ;
     
     GLuint _vertexArray;
     GLuint _vertexBuffer;

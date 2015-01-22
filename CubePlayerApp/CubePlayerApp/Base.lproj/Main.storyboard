@@ -53,12 +53,23 @@
                                             <segue destination="Wvo-gC-MD9" kind="show" id="PIE-aB-Sk9"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2X-6x-aCA">
+                                        <rect key="frame" x="384" y="18" width="76" height="30"/>
+                                        <state key="normal" title="play/pause">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playPauseButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="RBe-wp-KtV"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.33349273779999999" green="0.65625" blue="0.1826800331" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="NbN-a1-cvV" firstAttribute="top" secondItem="cqd-aB-tS9" secondAttribute="top" constant="18" id="OyB-24-YRy"/>
                                     <constraint firstAttribute="trailing" secondItem="NbN-a1-cvV" secondAttribute="trailing" constant="49" id="Q18-do-HK2"/>
+                                    <constraint firstItem="NbN-a1-cvV" firstAttribute="leading" secondItem="A2X-6x-aCA" secondAttribute="trailing" constant="75" id="ZbJ-ge-M7V"/>
                                     <constraint firstAttribute="bottom" secondItem="NbN-a1-cvV" secondAttribute="bottom" constant="17" id="hS1-Gj-NQZ"/>
+                                    <constraint firstItem="A2X-6x-aCA" firstAttribute="top" secondItem="cqd-aB-tS9" secondAttribute="top" constant="18" id="rj8-lj-q7X"/>
                                 </constraints>
                             </view>
                         </subviews>

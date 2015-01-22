@@ -45,6 +45,11 @@
 @property (strong, nonatomic) AVAssetImageGenerator *imageGen;
 @property (assign, nonatomic) CGContextRef cgContext;
 
+@property (assign, nonatomic) BOOL firstUpdate;
+@property (assign, nonatomic) BOOL guardTouches;
+@property (assign, nonatomic) NSInteger currentCubeSideNo;
+@property (assign, nonatomic) NSInteger prevCubeSideNo;
+@property (strong, nonatomic) NSMutableArray *times;
 @property (strong, nonatomic) UIImage *testImage;
 
 - (BOOL)loadShaders;
@@ -88,6 +93,7 @@ SceneVertex;
 
 /////////////////////////////////////////////////////////////////
 // Define vertex data for a triangle to use in example
+/*
 static const SceneVertex vertices[] =
 {
     {{ 0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    0.0f}},
@@ -132,7 +138,51 @@ static const SceneVertex vertices[] =
     {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 0.0f}},
     {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 1.0f}},
 };
-
+*/
+static const SceneVertex vertices[] =
+{
+    {{ 0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.166f*1, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.0f,    1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, {0.166f*1, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, {0.166f*1, 0.0f}},
+    
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*2, 0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*1, 0.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*2, 1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*2, 1.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*1, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, {0.166f*1, 1.0f}},
+    
+    {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*3, 0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*2, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*2, 0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.166f*2, 1.0f}},
+    
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*3, 0.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*4, 0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*3, 1.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*4, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, {0.166f*4, 1.0f}},
+    
+    {{ 0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*5, 1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*4, 1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*5, 0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*5, 0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*4, 1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f,  1.0f}, {0.166f*4, 0.0f}},
+    
+    {{ 0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*6, 0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*6, 1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*6, 1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, {0.166f*5, 1.0f}},
+};
 
 /////////////////////////////////////////////////////////////////
 // Called when the view controller's view is loaded
@@ -228,6 +278,25 @@ static const SceneVertex vertices[] =
 */
     
     [self setupPlayer];
+    
+    self.firstUpdate = YES;
+    
+    // ジェスチャー
+    /* 左スワイプ */
+    UISwipeGestureRecognizer* swipeLeftGesture =
+    [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeLeft:)];
+    swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    // ビューにジェスチャーを追加
+    [self.view addGestureRecognizer:swipeLeftGesture];
+    
+    /* 右スワイプ */
+    UISwipeGestureRecognizer* swipeRightGesture =
+    [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeRight:)];
+    swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    // ビューにジェスチャーを追加
+    [self.view addGestureRecognizer:swipeRightGesture];
 }
 
 
@@ -239,16 +308,31 @@ static const SceneVertex vertices[] =
     
     float aspect = fabsf(self.view.bounds.size.width / self.view.bounds.size.height);
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
-    
     self.baseEffect.transform.projectionMatrix = projectionMatrix;
     
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -4.0f);
-    baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
+    // カメラとの相対位置
+    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -3.0f); // マイナスの値を大きくするとカメラから遠ざかる
+//    baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
+    baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, 1.0f, 0.5f, 1.0f, 0.0f);
     
+    // 視点座標での物体の位置
     // Compute the model view matrix for the object rendered with GLKit
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -1.5f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
+//    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -1.5f);
+    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 0.0f);
+//    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f); // 回転軸の設定
     modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
+    
+    if (self.firstUpdate) {
+        _fixRotationX = 0.0f;
+        _fixRotationY = 0.0f;
+        _fixRotationZ = 0.0f;
+        //modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
+
+        self.firstUpdate = NO;
+    } else {
+        //modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
+    }
     
     self.baseEffect.transform.modelviewMatrix = modelViewMatrix;
 /*
@@ -261,8 +345,52 @@ static const SceneVertex vertices[] =
     
     _modelViewProjectionMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
 */
-    _rotation += self.timeSinceLastUpdate * 0.5f;
+//    _rotation += self.timeSinceLastUpdate * 0.5f;
+    
+    if (self.guardTouches) {
+        
+        if (self.prevCubeSideNo == 3 && self.currentCubeSideNo == 0) {
+            // ＋で0に戻った場合
+            // 約+1.5fで1面分移動
+            if (_rotation < (1.5f * 4)) {
+                _rotation += self.timeSinceLastUpdate * 2.0f;
+            } else {
+                self.guardTouches = NO;
+                _rotation = 0;
+            }
+            
+        } else if (self.prevCubeSideNo == 0 && self.currentCubeSideNo == 3) {
+            // -で3に戻った場合
+            // 約+1.5fで1面分移動
+            if (_rotation > (1.5f * -1)) {
+                _rotation -= self.timeSinceLastUpdate * 2.0f;
+            } else {
+                self.guardTouches = NO;
+                _rotation = 4.540541f;
+            }
 
+        } else if ((self.currentCubeSideNo - self.prevCubeSideNo) > 0) {
+            // +に移動
+            // 約+1.5fで1面分移動
+            if (_rotation < (1.5f * self.currentCubeSideNo)) {
+                _rotation += self.timeSinceLastUpdate * 2.0f;
+            } else {
+                self.guardTouches = NO;
+            }
+
+        } else if ((self.currentCubeSideNo - self.prevCubeSideNo) < 0) {
+            // -に移動
+            // 約+1.5fで1面分移動
+            if (_rotation > (1.5f * self.currentCubeSideNo)) {
+                _rotation -= self.timeSinceLastUpdate * 2.0f;
+            } else {
+                self.guardTouches = NO;
+            }
+
+        }
+    }
+
+    NSLog(@"rotation:%f, currentCubeSideNo:%lu", _rotation, (unsigned long)self.currentCubeSideNo);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -716,5 +844,41 @@ static const SceneVertex vertices[] =
     
     return imgRef;
 }
+
+#pragma marks - ジェスチャー
+
+-(void)swipeLeft:(UIGestureRecognizer*)recognizer {
+    NSLog(@"left");
+    
+    if (self.guardTouches) {
+        return;
+    }
+    self.guardTouches = YES;
+    self.prevCubeSideNo = self.currentCubeSideNo;
+    
+    if (self.currentCubeSideNo <= 0) {
+        self.currentCubeSideNo = 3;
+    } else {
+        self.currentCubeSideNo--;
+    }
+
+}
+
+-(void)swipeRight:(UIGestureRecognizer*)recognizer {
+    NSLog(@"right");
+
+    if (self.guardTouches) {
+        return;
+    }
+    self.guardTouches = YES;
+    self.prevCubeSideNo = self.currentCubeSideNo;
+    
+    if (self.currentCubeSideNo >= 3) {
+        self.currentCubeSideNo = 0;
+    } else {
+        self.currentCubeSideNo++;
+    }
+}
+
 
 @end

@@ -45,6 +45,9 @@ class ViewController: UIViewController {
         self.cubeAreaView.addSubview(self.cubeViewController!.view)
     }
     
+    @IBAction func playPauseButton(sender: AnyObject) {
+        
+    }
     @IBAction func printButton(sender: AnyObject) {
         
     }
