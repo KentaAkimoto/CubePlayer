@@ -39,4 +39,8 @@
  */
 +(instancetype)cubeViewControllerWithUrl:(NSURL*)assetUrl;
 
+-(void)toggleCaptureCurrentImage;
+-(void)captureCurrentImage;
+-(void)resetCurrentImage;
+-(NSArray*)getCurrentUIImages;
 @end

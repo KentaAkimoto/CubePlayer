@@ -50,7 +50,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Wvo-gC-MD9" kind="show" id="PIE-aB-Sk9"/>
+                                            <segue destination="Wvo-gC-MD9" kind="show" identifier="printView" id="qUa-Cy-9Mr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2X-6x-aCA">
@@ -62,12 +62,24 @@
                                             <action selector="playPauseButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="RBe-wp-KtV"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gig-9P-ORG">
+                                        <rect key="frame" x="33" y="18" width="30" height="30"/>
+                                        <state key="normal" title="load">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loadButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="m4Z-lt-xnu"/>
+                                            <action selector="playPauseButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Jid-Eb-W3v"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.33349273779999999" green="0.65625" blue="0.1826800331" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="Gig-9P-ORG" firstAttribute="leading" secondItem="cqd-aB-tS9" secondAttribute="leading" constant="8" id="HUO-a0-TYC"/>
                                     <constraint firstItem="NbN-a1-cvV" firstAttribute="top" secondItem="cqd-aB-tS9" secondAttribute="top" constant="18" id="OyB-24-YRy"/>
                                     <constraint firstAttribute="trailing" secondItem="NbN-a1-cvV" secondAttribute="trailing" constant="49" id="Q18-do-HK2"/>
                                     <constraint firstItem="NbN-a1-cvV" firstAttribute="leading" secondItem="A2X-6x-aCA" secondAttribute="trailing" constant="75" id="ZbJ-ge-M7V"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gig-9P-ORG" secondAttribute="bottom" constant="17" id="a9f-7X-3I4"/>
                                     <constraint firstAttribute="bottom" secondItem="NbN-a1-cvV" secondAttribute="bottom" constant="17" id="hS1-Gj-NQZ"/>
                                     <constraint firstItem="A2X-6x-aCA" firstAttribute="top" secondItem="cqd-aB-tS9" secondAttribute="top" constant="18" id="rj8-lj-q7X"/>
                                 </constraints>
@@ -128,6 +140,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="ZRH-VV-zQ6" id="4wu-JU-Qsk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ry7-4Z-N4Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

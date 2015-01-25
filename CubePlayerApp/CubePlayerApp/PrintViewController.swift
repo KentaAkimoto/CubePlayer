@@ -16,6 +16,8 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
     var quickLookViewController:QLPreviewController?
     var images:Array<UIImage> = []
     
+    @IBOutlet weak var textView: UITextView!
+    
 //    required init(coder aDecoder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
 //    }
@@ -112,7 +114,7 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         var basePoint:CGPoint = CGPointMake(150, 150) // 展開図書き出しの基準点
         self.drawCubeNet(context, boxWidth: boxWidth, boxHeight: boxHeight, lineMargin: lineMargin, basePoint: basePoint)
         
-        basePoint = CGPointMake(550, 800)
+        basePoint = CGPointMake(150, 900)
         self.drawCubeNet(context, boxWidth: boxWidth, boxHeight: boxHeight, lineMargin: lineMargin, basePoint: basePoint)
         
         // PDFコンテキストを閉じる
@@ -129,8 +131,9 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
             CGRectMake(basePoint.x,                  basePoint.y+boxSideHeight,     boxWidth, boxHeight),
             CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+boxSideHeight,     boxWidth, boxHeight),
             CGRectMake(basePoint.x+(boxSideWidth*2), basePoint.y+boxSideHeight,     boxWidth, boxHeight),
+            CGRectMake(basePoint.x+(boxSideWidth*3), basePoint.y+boxSideHeight,     boxWidth, boxHeight),
             CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+(boxSideHeight*2), boxWidth, boxHeight),
-            CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+(boxSideHeight*3), boxWidth, boxHeight)
+            //CGRectMake(basePoint.x+boxSideWidth,     basePoint.y+(boxSideHeight*3), boxWidth, boxHeight)
         ]
         
         //四角形
@@ -149,17 +152,25 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         
         // imageを貼る
         var resizedImage:UIImage? = nil
-        for image in self.images {
+        
+        for i in 0...4 {
+            var image:UIImage = self.images[i]
             resizedImage = resizeImage(image, size: CGSizeMake(boxWidth, boxHeight))
-            resizedImage!.drawAtPoint(boxRect[1].origin)
-            resizedImage!.drawAtPoint(boxRect[2].origin)
-            resizedImage!.drawAtPoint(boxRect[3].origin)
-            resizedImage!.drawAtPoint(boxRect[4].origin)
-            resizedImage!.drawAtPoint(boxRect[5].origin)
+            resizedImage!.drawAtPoint(boxRect[i+1].origin)
+            
         }
         
+//        for image in self.images {
+//            resizedImage = resizeImage(image, size: CGSizeMake(boxWidth, boxHeight))
+//            resizedImage!.drawAtPoint(boxRect[1].origin)
+//            resizedImage!.drawAtPoint(boxRect[2].origin)
+//            resizedImage!.drawAtPoint(boxRect[3].origin)
+//            resizedImage!.drawAtPoint(boxRect[4].origin)
+//            resizedImage!.drawAtPoint(boxRect[5].origin)
+//        }
+        
         // QRコード
-        var qr:UIImage = self.createQR("hello world", size:CGSizeMake(boxWidth, boxHeight))
+        var qr:UIImage = self.createQR(textView.text, size:CGSizeMake(boxWidth, boxHeight))
         qr.drawAtPoint(boxRect[0].origin)
         
         // のりしろ box1
@@ -174,10 +185,10 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
         // のりしろ box4
         self.drawOneNorishiroTop(boxRect[3])
         self.drawOneNorishiroBottom(boxRect[3])
-        self.drawOneNorishiroRight(boxRect[3])
         // のりしろ box5
-        self.drawOneNorishiroLeft(boxRect[4])
+        self.drawOneNorishiroTop(boxRect[4])
         self.drawOneNorishiroRight(boxRect[4])
+        self.drawOneNorishiroBottom(boxRect[4])
         // のりしろ box6
         self.drawOneNorishiroLeft(boxRect[5])
         self.drawOneNorishiroRight(boxRect[5])
@@ -296,9 +307,6 @@ class PrintViewController: UIViewController, QLPreviewControllerDataSource {
     }
     
     @IBAction func tapPrintButton(sender: AnyObject) {
-        
-        self.images = [UIImage(named: "test.png", inBundle: NSBundle.mainBundle(), compatibleWithTraitCollection: nil)!];
-        
         makePdf()
         preview()
     }

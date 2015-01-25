@@ -19,6 +19,7 @@
 		3741967A1A62F6F60093C839 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374196791A62F6F60093C839 /* CoreText.framework */; };
 		3741967C1A62FD210093C839 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3741967B1A62FD210093C839 /* CoreImage.framework */; };
 		374197AB1A6422E6002587D1 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374197AA1A6422E6002587D1 /* QuickLook.framework */; };
+		3747839F1A74EC5F0069D63E /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3747839E1A74EC5F0069D63E /* Photos.framework */; };
 		3750D56E1A6193C70053EF11 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 3750D56D1A6193C70053EF11 /* test.png */; };
 		3750D5701A61A6760053EF11 /* iori.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3750D56F1A61A6760053EF11 /* iori.mp4 */; };
 		3752E8C71A5F631600DA5406 /* PrintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3752E8C61A5F631600DA5406 /* PrintViewController.swift */; };
@@ -69,6 +70,8 @@
 		374196791A62F6F60093C839 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		3741967B1A62FD210093C839 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		374197AA1A6422E6002587D1 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		3747839C1A74E5AD0069D63E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		3747839E1A74EC5F0069D63E /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		3750D56D1A6193C70053EF11 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		3750D56F1A61A6760053EF11 /* iori.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = iori.mp4; sourceTree = "<group>"; };
 		3752E8C61A5F631600DA5406 /* PrintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3747839F1A74EC5F0069D63E /* Photos.framework in Frameworks */,
 				374197AB1A6422E6002587D1 /* QuickLook.framework in Frameworks */,
 				3741967C1A62FD210093C839 /* CoreImage.framework in Frameworks */,
 				3741967A1A62F6F60093C839 /* CoreText.framework in Frameworks */,
@@ -189,6 +193,8 @@
 		37FF6C7C1A505F8D0036A4A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3747839E1A74EC5F0069D63E /* Photos.framework */,
+				3747839C1A74E5AD0069D63E /* AssetsLibrary.framework */,
 				374197AA1A6422E6002587D1 /* QuickLook.framework */,
 				3741967B1A62FD210093C839 /* CoreImage.framework */,
 				374196791A62F6F60093C839 /* CoreText.framework */,

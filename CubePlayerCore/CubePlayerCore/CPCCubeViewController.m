@@ -50,7 +50,8 @@
 @property (assign, nonatomic) NSInteger currentCubeSideNo;
 @property (assign, nonatomic) NSInteger prevCubeSideNo;
 @property (strong, nonatomic) NSMutableArray *times;
-@property (strong, nonatomic) UIImage *testImage;
+@property (strong, nonatomic) NSMutableArray *timesNew;
+@property (strong, nonatomic) NSMutableArray *timesImages;
 
 - (BOOL)loadShaders;
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
@@ -191,10 +192,6 @@ static const SceneVertex vertices[] =
 {
     [super viewDidLoad];
     
-//    self.testImage = [UIImage imageNamed:@"test.png" inBundle:[NSBundle mainBundle] compatibleWithTraitCollection:nil];
-    self.testImage = [UIImage imageNamed:@"beetle.png" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-
-    
     // Verify the type of view created automatically by the
     // Interface Builder storyboard
     GLKView *view = (GLKView *)self.view;
@@ -276,6 +273,34 @@ static const SceneVertex vertices[] =
     [self.baseEffect.texture2d1 aglkSetParameter:GL_TEXTURE_WRAP_T
                                            value:GL_REPEAT];
 */
+
+    self.times = [@[
+                    [NSNull null],
+                    [NSNull null],
+                    [NSNull null],
+                    [NSNull null],
+                    [NSNull null],
+                    [NSNull null]
+                    ] mutableCopy];
+    
+    self.timesNew = [@[
+                    [NSNull null], // currentCubeSideNo:3
+                    [NSNull null], // cube top
+                    [NSNull null], // currentCubeSideNo:1
+                    [NSNull null], // cube bottom
+                    [NSNull null], // currentCubeSideNo:0 // [NSValue valueWithCMTime:CMTimeMake(600, 60)]
+                    [NSNull null] // currentCubeSideNo:2
+                    ] mutableCopy];
+    
+    self.timesImages = [@[
+                      [NSNull null],
+                      [NSNull null],
+                      [NSNull null],
+                      [NSNull null],
+                      [NSNull null],
+                      [NSNull null]
+                    ] mutableCopy];
+
     
     [self setupPlayer];
     
@@ -469,6 +494,12 @@ static const SceneVertex vertices[] =
     // Stop using the context created in -viewDidLoad
     ((GLKView *)self.view).context = nil;
     [EAGLContext setCurrentContext:nil];
+    
+    for (NSValue* timesImageValue in self.timesImages) {
+        if ((NSNull*)timesImageValue != [NSNull null]) {
+            CGImageRelease(timesImageValue.pointerValue);
+        }
+    }
 }
 
 
@@ -711,16 +742,34 @@ static const SceneVertex vertices[] =
     
     CGImageRef cgImage = [_imageGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
     
-    NSArray *images = @[[NSValue valueWithPointer:cgImage],
+    NSMutableArray *images = [@[
                         [NSValue valueWithPointer:cgImage],
                         [NSValue valueWithPointer:cgImage],
                         [NSValue valueWithPointer:cgImage],
                         [NSValue valueWithPointer:cgImage],
-                        [NSValue valueWithPointer:cgImage]];
+                        [NSValue valueWithPointer:cgImage],
+                        [NSValue valueWithPointer:cgImage]
+                    ] mutableCopy];
+    
+    CGImageRef timeCgImage = NULL;
+    for (int i = 0; i < self.timesNew.count; i++) {
+        if (self.timesNew && ((NSNull*)self.timesNew[i]) != [NSNull null]) {
+            timeCgImage = [_imageGen copyCGImageAtTime:((NSValue*)self.timesNew[i]).CMTimeValue actualTime:&actualTime error:&error];
+            self.timesImages[i] = [NSValue valueWithPointer:timeCgImage];
+            self.times[i] = self.timesNew[i];
+            self.timesNew[i] = [NSNull null];
+        }
+    }
+
+    for (int i = 0; i < self.timesImages.count; i++) {
+        if (((NSNull*)self.timesImages[i]) != [NSNull null]) {
+            images[i] = self.timesImages[i];
+        }
+    }
     
     CGImageRef combinedCgImage = [self createCombinedImages:images];
     //CGImageRef combinedCgImage = cgImage;
-
+    
     CGImageRelease(cgImage);
     
     if (combinedCgImage != nil) {
@@ -843,6 +892,117 @@ static const SceneVertex vertices[] =
     CGContextRelease(bitmapContext);
     
     return imgRef;
+}
+
+-(CGImageRef)_createResizeImage:(CGImageRef)imageRef resizeBase:(CGFloat)resizeBase
+{
+    size_t w = CGImageGetWidth(imageRef);
+    size_t h = CGImageGetHeight(imageRef);
+    size_t resize_w, resize_h;
+    if (w < h) {
+        //縦辺が長い場合
+        resize_w = resizeBase;
+        resize_h = h * resize_w / w; //横幅と同じ比率
+    } else {
+        resize_h = resizeBase;
+        resize_w = w * resize_h / h;
+    }
+    
+    return [self _createResizeCGImage:imageRef toWidth:resize_w andHeight:resize_h];
+}
+
+-(CGImageRef)_createResizeCGImage:(CGImageRef)image toWidth:(int)width andHeight:(int)height {
+    // create context, keeping original image properties
+    CGColorSpaceRef colorspace = CGImageGetColorSpace(image);
+    CGContextRef context = CGBitmapContextCreate(NULL, width, height,
+                                                 CGImageGetBitsPerComponent(image),
+                                                 CGImageGetBytesPerRow(image),
+                                                 colorspace,
+                                                 CGImageGetAlphaInfo(image));
+    CGColorSpaceRelease(colorspace);
+    
+    
+    if(context == NULL)
+        return nil;
+    
+    
+    // draw image to context (resizing it)
+    CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
+    // extract resulting image from context
+    CGImageRef imgRef = CGBitmapContextCreateImage(context);
+    CGContextRelease(context);
+    
+    return imgRef;
+}
+
+-(int)_arrayIndexFromCubeSideNo:(NSInteger)cubeSideNo
+{
+    int index = 0;
+    switch (cubeSideNo) {
+        case 0:
+            index = 4;
+            break;
+        case 1:
+            index = 2;
+            break;
+        case 2:
+            index = 5;
+            break;
+        case 3:
+            index = 0;
+            break;
+        default:
+            break;
+    }
+    return index;
+}
+
+-(int)_currentIndex
+{
+    return [self _arrayIndexFromCubeSideNo:self.currentCubeSideNo];
+}
+
+-(void)toggleCaptureCurrentImage
+{
+    int index = [self _currentIndex];
+    if (self.times[index] == [NSNull null]) {
+        [self captureCurrentImage];
+    } else {
+        [self resetCurrentImage];
+    }
+}
+
+-(void)captureCurrentImage
+{
+    CMTime time = [_player currentTime];
+    int index = [self _currentIndex];
+    self.timesNew[index] = [NSValue valueWithCMTime:time];
+    
+}
+
+-(void)resetCurrentImage
+{
+    int index = [self _currentIndex];
+    self.times[index] = [NSNull null];
+    CGImageRelease(((NSValue*)self.timesImages[index]).pointerValue);
+    self.timesImages[index] = [NSNull null];
+}
+
+-(NSArray*)getCurrentUIImages
+{
+    NSMutableArray *results = [@[] mutableCopy];
+
+    for (int i = 0; i < 6; i++) {
+        NSValue *time = self.times[[self _arrayIndexFromCubeSideNo:i]];
+        if (((NSNull*)time) == [NSNull null]) {
+            time = [NSValue valueWithCMTime:CMTimeMake(60, 60)];
+        }
+        CGImageRef cgImage = [_imageGen copyCGImageAtTime:time.CMTimeValue actualTime:nil error:nil];
+        [results addObject:[UIImage imageWithCGImage:cgImage]];
+        CGImageRelease(cgImage);
+    }
+    
+    return results;
 }
 
 #pragma marks - ジェスチャー
