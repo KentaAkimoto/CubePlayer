@@ -740,7 +740,9 @@ static const SceneVertex vertices[] =
     CMTime actualTime;
     NSError* error = nil;
     
-    CGImageRef cgImage = [_imageGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    CGImageRef orgCgImage = [_imageGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    CGImageRef cgImage = [self _createResizeImage:orgCgImage resizeBase:300];
+    CGImageRelease(orgCgImage);
     
     NSMutableArray *images = [@[
                         [NSValue valueWithPointer:cgImage],
@@ -752,9 +754,13 @@ static const SceneVertex vertices[] =
                     ] mutableCopy];
     
     CGImageRef timeCgImage = NULL;
+    CGImageRef orgTimeCgImage = NULL;
     for (int i = 0; i < self.timesNew.count; i++) {
         if (self.timesNew && ((NSNull*)self.timesNew[i]) != [NSNull null]) {
-            timeCgImage = [_imageGen copyCGImageAtTime:((NSValue*)self.timesNew[i]).CMTimeValue actualTime:&actualTime error:&error];
+            orgTimeCgImage = [_imageGen copyCGImageAtTime:((NSValue*)self.timesNew[i]).CMTimeValue actualTime:&actualTime error:&error];
+            timeCgImage = [self _createResizeImage:orgTimeCgImage resizeBase:300];
+            CGImageRelease(orgTimeCgImage);
+            
             self.timesImages[i] = [NSValue valueWithPointer:timeCgImage];
             self.times[i] = self.timesNew[i];
             self.timesNew[i] = [NSNull null];
@@ -898,6 +904,12 @@ static const SceneVertex vertices[] =
 {
     size_t w = CGImageGetWidth(imageRef);
     size_t h = CGImageGetHeight(imageRef);
+    
+    if (w < 400) {
+        CGImageRetain(imageRef);
+        return imageRef;
+    }
+    
     size_t resize_w, resize_h;
     if (w < h) {
         //縦辺が長い場合
@@ -913,7 +925,8 @@ static const SceneVertex vertices[] =
 
 -(CGImageRef)_createResizeCGImage:(CGImageRef)image toWidth:(int)width andHeight:(int)height {
     // create context, keeping original image properties
-    CGColorSpaceRef colorspace = CGImageGetColorSpace(image);
+//    CGColorSpaceRef colorspace = CGImageGetColorSpace(image);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = CGBitmapContextCreate(NULL, width, height,
                                                  CGImageGetBitsPerComponent(image),
                                                  CGImageGetBytesPerRow(image),
