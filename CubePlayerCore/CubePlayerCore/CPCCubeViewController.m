@@ -52,6 +52,7 @@
 @property (strong, nonatomic) NSMutableArray *times;
 @property (strong, nonatomic) NSMutableArray *timesNew;
 @property (strong, nonatomic) NSMutableArray *timesImages;
+@property (assign, nonatomic) UIImageOrientation videoOrientation;
 
 - (BOOL)loadShaders;
 - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file;
@@ -700,6 +701,15 @@ static const SceneVertex vertices[] =
     }];
     
     AVAssetTrack* srcTrack = [[_asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+/*
+    // 動画向き
+    CGAffineTransform t = srcTrack.preferredTransform;
+    self.videoOrientation = UIImageOrientationUp;
+    if(t.a == 0 && t.b == 1.0 && t.c == -1.0 && t.d == 0)  {orientation = UIImageOrientationRight;}
+    if(t.a == 0 && t.b == -1.0 && t.c == 1.0 && t.d == 0)  {orientation = UIImageOrientationLeft;}
+    if(t.a == 1.0 && t.b == 0 && t.c == 0 && t.d == 1.0)   {orientation = UIImageOrientationUp;}
+    if(t.a == -1.0 && t.b == 0 && t.c == 0 && t.d == -1.0) {orientation = UIImageOrientationDown;}
+*/
     self.comp = [AVMutableComposition composition];
     self.track = [_comp addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
     NSError* error = nil;
@@ -742,6 +752,18 @@ static const SceneVertex vertices[] =
     
     CGImageRef orgCgImage = [_imageGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
     CGImageRef cgImage = [self _createResizeImage:orgCgImage resizeBase:300];
+/*
+    //CGImageからUIImageを作成
+    UIImage *imgC = [UIImage imageWithCGImage:orgCgImage];
+    NSData *data = UIImagePNGRepresentation(imgC);
+    NSString *filePath = [NSString stringWithFormat:@"%@/test2.png" , [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]];
+    NSLog(@"%@", filePath);
+    if ([data writeToFile:filePath atomically:YES]) {
+        NSLog(@"OK");
+    } else {
+        NSLog(@"Error");
+    }
+*/
     CGImageRelease(orgCgImage);
     
     NSMutableArray *images = [@[
@@ -1017,7 +1039,46 @@ static const SceneVertex vertices[] =
     
     return results;
 }
-
+/*
+- (CGImageRef)_rotateImage:(CGImageRef)img_ref angle:(UIImageOrientation)angle
+{
+    CGContextRef context;
+    UIImage *rotate_image;
+    switch (angle) {
+        case UIImageOrientationUp://0:
+            return img_ref;
+            break;
+        case UIImageOrientationRight://90:
+            UIGraphicsBeginImageContext(CGSizeMake(img.size.height, img.size.width));
+            context = UIGraphicsGetCurrentContext();
+            CGContextTranslateCTM(context, img.size.height, img.size.width);
+            CGContextScaleCTM(context, 1.0, -1.0);
+            CGContextRotateCTM(context, M_PI/2.0);
+            break;
+        case UIImageOrientationDown://180:
+            UIGraphicsBeginImageContext(CGSizeMake(img.size.width, img.size.height));
+            context = UIGraphicsGetCurrentContext();
+            CGContextTranslateCTM(context, img.size.width, 0);
+            CGContextScaleCTM(context, 1.0, -1.0);
+            CGContextRotateCTM(context, -M_PI);
+            break;
+        case UIImageOrientationLeft://270:
+            UIGraphicsBeginImageContext(CGSizeMake(img.size.height, img.size.width));
+            context = UIGraphicsGetCurrentContext();
+            CGContextScaleCTM(context, 1.0, -1.0);
+            CGContextRotateCTM(context, -M_PI/2.0);
+            break;
+        default:
+            return nil;
+    }
+    
+    CGContextDrawImage(context, CGRectMake(0, 0, img.size.width, img.size.height), img_ref);
+    rotate_image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return rotate_image.CGImage;
+}
+*/
 #pragma marks - ジェスチャー
 
 -(void)swipeLeft:(UIGestureRecognizer*)recognizer {
